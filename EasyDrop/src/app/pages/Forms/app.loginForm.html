@@ -1,0 +1,28 @@
+<div>
+  <p style="font-size:35px;text-align: center;">Welcome to EasyDrop!</p>
+</div>
+
+<form #userLoginForm="ngForm"
+      (ngSubmit)="onSubmit(userLoginForm.value)">
+  <div class="container">
+    <label for="uname"><b>Username</b></label>
+    <input type="text" placeholder="Enter Username" name="uname" ngModel required>
+
+    <label for="psw"><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" name="psw" ngModel required>
+
+    <div class="clearfix">
+      <button type="submit" class="login_button">Login</button>
+    </div>
+
+    <label>
+      <input type="checkbox" checked="checked" name="remember"> Remember me
+    </label>
+  </div>
+</form>
+
+<div class="new_container">
+  <p style="text-align: center">New to EasyDrop? <a href="signup">Create an account.</a></p>
+</div>
+
+<router-outlet></router-outlet>
