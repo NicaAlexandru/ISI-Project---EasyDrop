@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { User } from '../../models/user'
+import { AppUser } from '../../models/appUser'
 
 @Component({
   selector: 'app-login',
@@ -9,7 +9,7 @@ import { User } from '../../models/user'
 export class AppLoginForm {
   title = 'EasyDrop';
 
-  onSubmit(userItem: User) {
+  onSubmit(userItem: AppUser) {
     console.log(userItem);
   }
 }

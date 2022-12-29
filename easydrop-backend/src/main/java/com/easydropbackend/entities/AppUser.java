@@ -2,6 +2,7 @@ package com.easydropbackend.entities;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,8 +13,10 @@ import java.io.Serializable;
 @Table(name = "app_user")
 public class AppUser implements Serializable {
     @Id
+    @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDHexGenerator")
+    @GeneratedValue(generator = "uuid")
     @Column(nullable = false, updatable = false, name="id_user")
-    private Long idUser;
+    private String idUser;
 
     @Column(unique=true, name="email")
     private String email;
@@ -32,7 +35,7 @@ public class AppUser implements Serializable {
 
     public AppUser() {}
 
-    public AppUser(Long idUser, String email, String userPassword,
+    public AppUser(String idUser, String email, String userPassword,
                    String userType, String userName, String phoneNumber) {
         this.idUser = idUser;
         this.email = email;

@@ -5,6 +5,7 @@ import { AppLoginForm } from './pages/Forms/app.loginForm';
 import { AppSignupForm} from "./pages/Forms/app.signupForm";
 import { AppComponent} from "./app.component";
 import { routing} from "./app.routing";
+import { HttpClientModule} from "@angular/common/http";
 
 /*
  Bootstrap -> the point of start of the application
@@ -19,6 +20,7 @@ import { routing} from "./app.routing";
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
     routing
   ],
   providers: [],

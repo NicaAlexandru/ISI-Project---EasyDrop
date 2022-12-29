@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class AppUserService {
@@ -21,7 +20,6 @@ public class AppUserService {
     }
 
     public AppUser addUser(AppUser new_user) {
-        new_user.setIdUser(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE);
         return appUserRepository.save(new_user);
     }
 
@@ -29,7 +27,7 @@ public class AppUserService {
         return appUserRepository.findAll();
     }
 
-    public AppUser findUserById(Long idUser) {
+    public AppUser findUserById(String idUser) {
         return appUserRepository.findByIdUser(idUser).orElseThrow(() ->
                 new UserNotFoundException("User with id " + "was not found"));
     }
@@ -38,7 +36,7 @@ public class AppUserService {
         return appUserRepository.save(updated_user);
     }
 
-    public void deleteUser(Long idUser) {
+    public void deleteUser(String idUser) {
         appUserRepository.deleteUserByIdUser(idUser);
     }
 }
