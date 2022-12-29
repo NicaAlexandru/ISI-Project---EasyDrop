@@ -7,23 +7,23 @@ import {Observable} from "rxjs";
   providedIn: 'root'
 })
 export class AppUserService {
-  private apiServerUrl = '';
+  private apiServerUrl = 'http://localhost:8080/users';
 
   constructor(private http: HttpClient) { }
 
   public getAppUsers(): Observable<AppUser[]> {
-    return this.http.get<AppUser[]>(`${this.apiServerUrl}/users/allUsers`);
+    return this.http.get<AppUser[]>(`${this.apiServerUrl}/allUsers`);
   }
 
   public addAppUsers(appUser: AppUser): Observable<AppUser> {
-    return this.http.post<AppUser>(`${this.apiServerUrl}/users/add`, appUser);
+    return this.http.post<AppUser>(`${this.apiServerUrl}/add`, appUser);
   }
 
   public updateAppUsers(appUser: AppUser): Observable<AppUser> {
-    return this.http.put<AppUser>(`${this.apiServerUrl}/users/update`, appUser);
+    return this.http.put<AppUser>(`${this.apiServerUrl}/update`, appUser);
   }
 
   public deleteAppUsers(idUser: string): Observable<void> {
-    return this.http.delete<void>(`${this.apiServerUrl}/users/delete/{$idUser}`);
+    return this.http.delete<void>(`${this.apiServerUrl}/delete/{$idUser}`);
   }
 }

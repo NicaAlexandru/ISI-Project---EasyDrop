@@ -1,16 +1,14 @@
 /* This class defines a AppUser */
 
 export class AppUser {
-  idUser: string;
+  idUser!: string;
   userName: string;
   userPassword: string;
   email: string;
   userType: string;
   phoneNumber: string;
 
-  constructor(idUser: string, userName: string, userPassword: string,
-              email: string, userType: string, phoneNumber: string) {
-    this.idUser = idUser;
+  constructor(userName: string, userPassword: string, email: string, userType: string, phoneNumber: string) {
     this.userName = userName;
     this.userPassword = userPassword;
     this.email = email;
@@ -18,9 +16,15 @@ export class AppUser {
     this.phoneNumber = phoneNumber;
   }
 
-  getUserInfo() {
+  setIdUser(idUser: string) {
+    this.idUser = idUser;
+  }
+
+  getUserInfo(): string {
     if (this.userName != null && this.userPassword != null) {
-      console.log("AppUser " + this.userName + " with password " + this.userPassword);
+      return ("AppUser " + this.userName + " with password " + this.userPassword);
+    } else {
+      return "Invalid user"
     }
   }
 }
