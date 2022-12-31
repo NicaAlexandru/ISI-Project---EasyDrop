@@ -13,10 +13,10 @@ import esri = __esri; // Esri TypeScript Types
 
 @Component({
   selector: "app-basemap",
-  templateUrl: "./app.basemap.html",
-  styleUrls: ['./app.basemap.css']
+  templateUrl: "./app-client.basemap.html",
+  styleUrls: ['./app-client.basemap.css']
 })
-export class AppBasemap implements OnInit, OnDestroy {
+export class AppClientBasemap implements OnInit, OnDestroy {
   @Output() mapLoadedEvent = new EventEmitter<boolean>();
 
   // The <div> where we will place the map
@@ -41,11 +41,11 @@ export class AppBasemap implements OnInit, OnDestroy {
   graphicsLayer: esri.GraphicsLayer;
 
   // Attributes
-  zoom = 10;
-  center: Array<number> = [-118.73682450024377, 34.07817583063242];
+  zoom = 11.2;
+  center: Array<number> = [26.115875, 44.439322];
   basemap = "streets-vector";
   loaded = false;
-  pointCoords: number[] = [-118.73682450024377, 34.07817583063242];
+  pointCoords: number[] = [26.115875, 44.439322];
   dir: number = 0;
   count: number = 0;
   timeoutHandler = null;

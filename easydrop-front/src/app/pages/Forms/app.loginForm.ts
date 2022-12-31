@@ -42,7 +42,13 @@ export class AppLoginForm {
     if (foundUser.userPassword != submittedPassword) {
       alert("Invalid credentials")
     } else {
-      this.router.navigate(['/basemap']);
+      if (this.appUser.userType == "CLIENT") {
+        this.router.navigate(['/client-basemap']);
+      } else if (this.appUser.userType == "SELLER") {
+        this.router.navigate(['/seller-basemap'])
+      } else if (this.appUser.userType == "COURIER") {
+        this.router.navigate(['/courier-basemap'])
+      }
     }
   }
 }

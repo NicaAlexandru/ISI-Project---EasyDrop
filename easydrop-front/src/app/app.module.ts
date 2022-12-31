@@ -6,7 +6,9 @@ import { AppSignupForm} from "./pages/Forms/app.signupForm";
 import { AppComponent} from "./app.component";
 import { routing} from "./app.routing";
 import { HttpClientModule} from "@angular/common/http";
-import {AppBasemap} from "./pages/Map/app.basemap";
+import {AppClientBasemap} from "./pages/Map/CLIENT/app-client.basemap";
+import {AppCourierBasemap} from "./pages/Map/COURIER/app-courier.basemap";
+import {AppSellerBasemap} from "./pages/Map/SELLER/app-seller.basemap";
 
 /*
  Bootstrap -> the point of start of the application
@@ -16,7 +18,9 @@ import {AppBasemap} from "./pages/Map/app.basemap";
     AppComponent,
     AppLoginForm,
     AppSignupForm,
-    AppBasemap
+    AppClientBasemap,
+    AppCourierBasemap,
+    AppSellerBasemap
   ],
   imports: [
     BrowserModule,
