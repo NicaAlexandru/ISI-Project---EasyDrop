@@ -15,6 +15,18 @@ export class AppUserService {
     return this.http.get<AppUser[]>(`${this.apiServerUrl}/allUsers`);
   }
 
+  public getAppUserByUserId(idUser: string): Observable<AppUser> {
+    return this.http.get<AppUser>(`${this.apiServerUrl}/findById/${idUser}`);
+  }
+
+  public getAppUserByUserName(userName: string): Observable<AppUser> {
+    return this.http.get<AppUser>(`${this.apiServerUrl}/findByUserName/${userName}`);
+  }
+
+  public getAppUserByEmail(email: string): Observable<AppUser> {
+    return this.http.get<AppUser>(`${this.apiServerUrl}/findByEmail/${email}`);
+  }
+
   public addAppUsers(appUser: AppUser): Observable<AppUser> {
     return this.http.post<AppUser>(`${this.apiServerUrl}/add`, appUser);
   }
@@ -24,6 +36,6 @@ export class AppUserService {
   }
 
   public deleteAppUsers(idUser: string): Observable<void> {
-    return this.http.delete<void>(`${this.apiServerUrl}/delete/{$idUser}`);
+    return this.http.delete<void>(`${this.apiServerUrl}/delete/${idUser}`);
   }
 }

@@ -2,35 +2,47 @@ import {Component, OnInit} from '@angular/core';
 import { AppUser } from '../../models/appUser'
 import {AppUserService} from "../../services/appUser.service";
 import {HttpErrorResponse} from "@angular/common/http";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login',
   templateUrl: './app.loginForm.html',
   styleUrls: ['./app.loginForm.css']
 })
-export class AppLoginForm implements OnInit {
+export class AppLoginForm {
   title = 'EasyDrop';
 
-  public appUsers!: AppUser[];
+  public appUser!: AppUser;
 
-  constructor(private appUserService: AppUserService) { }
+  constructor(private appUserService: AppUserService, private router: Router) { }
 
   onSubmit(userItem: AppUser) {
-    console.log(userItem);
-  }
-
-  ngOnInit() {
-    this.getUsers();
-  }
-
-  public getUsers(): void {
-    this.appUserService.getAppUsers().subscribe(
-      (response: AppUser[]) => {
-        this.appUsers = response;
+    this.appUserService.getAppUserByUserName(userItem.userName).subscribe(
+      (response: AppUser) => {
+        this.appUser = response;
+        console.log(this.appUser);
+        this.checkCredentials(this.appUser, userItem.userPassword);
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.appUserService.getAppUserByEmail(userItem.userName).subscribe(
+          (response: AppUser) => {
+            this.appUser = response;
+            console.log(this.appUser);
+            this.checkCredentials(this.appUser, userItem.userPassword);
+          },
+          (error: HttpErrorResponse) => {
+            alert("User not found!");
+          }
+        );
       }
     );
+  }
+
+  checkCredentials(foundUser: AppUser, submittedPassword: string) {
+    if (foundUser.userPassword != submittedPassword) {
+      alert("Invalid credentials")
+    } else {
+      this.router.navigate(['/basemap']);
+    }
   }
 }

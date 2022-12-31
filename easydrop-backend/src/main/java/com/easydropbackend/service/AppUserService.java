@@ -28,8 +28,15 @@ public class AppUserService {
     }
 
     public AppUser findUserById(String idUser) {
-        return appUserRepository.findByIdUser(idUser).orElseThrow(() ->
-                new UserNotFoundException("User with id " + "was not found"));
+        return appUserRepository.findByIdUser(idUser).orElse(null);
+    }
+
+    public AppUser findUserByUserName(String userName) {
+        return appUserRepository.findByUserName(userName).orElse(null);
+    }
+
+    public AppUser findUserByEmail(String email) {
+        return appUserRepository.findByEmail(email).orElse(null);
     }
 
     public AppUser updateUser(AppUser updated_user) {

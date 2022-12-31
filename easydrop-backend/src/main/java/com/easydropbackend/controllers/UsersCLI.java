@@ -4,6 +4,8 @@ import com.easydropbackend.entities.AppUser;
 import com.easydropbackend.entities.Client;
 import com.easydropbackend.service.AppUserService;
 import com.easydropbackend.service.ClientService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +19,7 @@ import java.util.List;
 public class UsersCLI {
     private final AppUserService appUserService;
     private final ClientService clientService;
+    private static final Logger logger = LoggerFactory.getLogger(AppUserService.class);
 
     public UsersCLI(AppUserService appUserService, ClientService clientService) {
         this.appUserService = appUserService;
@@ -33,14 +36,39 @@ public class UsersCLI {
         return new ResponseEntity<>(appUsers, HttpStatus.OK);
     }
 
-    @GetMapping("/find/{id_user}")
-    public ResponseEntity<AppUser> getUserById_user(@PathVariable("id_user") String id_user) {
+    @GetMapping("/findById/{id_user}")
+    public ResponseEntity<AppUser> getUserById_user(@PathVariable String id_user) {
         AppUser appUser = appUserService.findUserById(id_user);
 
         // Return an OK http response (200) and the list of users
-        return new ResponseEntity<>(appUser, HttpStatus.OK);
+        if (appUser != null)
+            return new ResponseEntity<>(appUser, HttpStatus.OK);
+
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
-    
+
+    @GetMapping("/findByUserName/{userName}")
+    public ResponseEntity<AppUser> getUserByUserName(@PathVariable String userName) {
+        AppUser appUser = appUserService.findUserByUserName(userName);
+
+        // Return an OK http response (200) and the list of users
+        if (appUser != null)
+            return new ResponseEntity<>(appUser, HttpStatus.OK);
+
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("/findByEmail/{email}")
+    public ResponseEntity<AppUser> getUserByEmail(@PathVariable String email) {
+        AppUser appUser = appUserService.findUserByEmail(email);
+
+        // Return an OK http response (200) and the list of users
+        if (appUser != null)
+            return new ResponseEntity<>(appUser, HttpStatus.OK);
+
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    }
+
     /* PostMapping is used because we will add new elements to the DB */
     @PostMapping("/add")
     public List<ResponseEntity<?>> addUser(@RequestBody AppUser user) {

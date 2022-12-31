@@ -9,4 +9,8 @@ public interface AppUserRepository extends JpaRepository<AppUser, String> {
     void deleteUserByIdUser(String idUser);
 
     Optional<AppUser> findByIdUser(String idUser);
+
+    Optional<AppUser> findByUserName(String userName);
+
+    Optional<AppUser> findByEmail(String email);
 }

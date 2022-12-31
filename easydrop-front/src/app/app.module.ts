@@ -6,6 +6,7 @@ import { AppSignupForm} from "./pages/Forms/app.signupForm";
 import { AppComponent} from "./app.component";
 import { routing} from "./app.routing";
 import { HttpClientModule} from "@angular/common/http";
+import {AppBasemap} from "./pages/Map/app.basemap";
 
 /*
  Bootstrap -> the point of start of the application
@@ -14,7 +15,8 @@ import { HttpClientModule} from "@angular/common/http";
   declarations: [
     AppComponent,
     AppLoginForm,
-    AppSignupForm
+    AppSignupForm,
+    AppBasemap
   ],
   imports: [
     BrowserModule,
