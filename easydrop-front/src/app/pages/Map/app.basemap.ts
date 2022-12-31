@@ -12,9 +12,9 @@ import { setDefaultOptions, loadModules } from 'esri-loader';
 import esri = __esri; // Esri TypeScript Types
 
 @Component({
-  selector: "app-esri-map",
-  templateUrl: "./esri-map.component.html",
-  styleUrls: ["./esri-map.component.scss"]
+  selector: "app-basemap",
+  templateUrl: "./app.basemap.html",
+  styleUrls: ['./app.basemap.css']
 })
 export class AppBasemap implements OnInit, OnDestroy {
   @Output() mapLoadedEvent = new EventEmitter<boolean>();
@@ -52,6 +52,7 @@ export class AppBasemap implements OnInit, OnDestroy {
 
   constructor() { }
 
+  // @ts-ignore
   async initializeMap() {
     try {
       // configure esri-loader to use version x from the ArcGIS CDN
@@ -72,7 +73,7 @@ export class AppBasemap implements OnInit, OnDestroy {
         "esri/rest/support/FeatureSet"
       ]);
 
-      // esriConfig.apiKey = "MY_API_KEY";
+      esriConfig.apiKey = "AAPK9c35c4e723f74349b3a567f912c4f830Geg15YP_3y6EW9M1hKGNnErJ-gakUO6tZJZzz0DrMxJhHFU8IAOc5JwTdjGjQon-";
 
       this._Map = Map;
       this._MapView = MapView;
@@ -318,6 +319,7 @@ export class AppBasemap implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (this.view) {
       // destroy the map view
+      // @ts-ignore
       this.view.container = null;
     }
     this.stopTimer();
