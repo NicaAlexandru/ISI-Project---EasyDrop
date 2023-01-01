@@ -12,11 +12,11 @@ import { setDefaultOptions, loadModules } from 'esri-loader';
 import esri = __esri; // Esri TypeScript Types
 
 @Component({
-  selector: "app-basemap",
-  templateUrl: "./app-client.basemap.html",
-  styleUrls: ['./app-client.basemap.css']
+  selector: "app-seller-basemap",
+  templateUrl: "./app-seller.basemap.html",
+  styleUrls: ['./app-seller.basemap.css']
 })
-export class AppClientBasemap implements OnInit, OnDestroy {
+export class AppSellerBasemap implements OnInit, OnDestroy {
   @Output() mapLoadedEvent = new EventEmitter<boolean>();
 
   // The <div> where we will place the map
