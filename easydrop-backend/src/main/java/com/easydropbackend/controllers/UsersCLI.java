@@ -2,8 +2,13 @@ package com.easydropbackend.controllers;
 
 import com.easydropbackend.entities.AppUser;
 import com.easydropbackend.entities.Client;
+import com.easydropbackend.entities.Seller;
+import com.easydropbackend.entities.Courier;
 import com.easydropbackend.service.AppUserService;
 import com.easydropbackend.service.ClientService;
+import com.easydropbackend.service.SellerService;
+import com.easydropbackend.service.CourierService;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -19,11 +24,17 @@ import java.util.List;
 public class UsersCLI {
     private final AppUserService appUserService;
     private final ClientService clientService;
+    private final SellerService sellerService;
+
+    private final CourierService courierService;
     private static final Logger logger = LoggerFactory.getLogger(AppUserService.class);
 
-    public UsersCLI(AppUserService appUserService, ClientService clientService) {
+    public UsersCLI(AppUserService appUserService, ClientService clientService, SellerService sellerService,
+                    CourierService courierService) {
         this.appUserService = appUserService;
         this.clientService = clientService;
+        this.sellerService = sellerService;
+        this.courierService = courierService;
     }
 
     /* GET request. Returns HTTP response that can contain a list of AppUsers
@@ -83,6 +94,18 @@ public class UsersCLI {
             Client new_client = new Client(user.getIdUser());
             Client added_client = clientService.addClient(new_client);
             responses.add(new ResponseEntity<Client>(added_client, HttpStatus.CREATED));
+        }
+
+        if (userType.equals("SELLER")) {
+            Seller new_seller = new Seller(user.getIdUser());
+            Seller added_seller = sellerService.addSeller(new_seller);
+            responses.add(new ResponseEntity<Seller>(added_seller, HttpStatus.CREATED));
+        }
+
+        if (userType.equals("COURIER")) {
+            Courier new_courier = new Courier(user.getIdUser());
+            Courier added_courier = courierService.addCourier(new_courier);
+            responses.add(new ResponseEntity<Courier>(added_courier, HttpStatus.CREATED));
         }
 
         return responses;
