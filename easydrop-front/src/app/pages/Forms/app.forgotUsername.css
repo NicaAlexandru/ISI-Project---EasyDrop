@@ -6,7 +6,7 @@ form {
 }
 
 /* Full-width inputs */
-input[type=text], input[type=password] {
+input[type=text] {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -26,7 +26,7 @@ button {
   width: 100%;
 }
 
-.login_button {
+.submit_button {
   background-color: #04AA6D
 }
 
@@ -39,32 +39,7 @@ button:hover {
   opacity: 0.8;
 }
 
-/* Center the avatar image inside this container */
-.imgcontainer {
-  text-align: center;
-  margin: 24px 0 12px 0;
-}
-
 /* Add padding to containers */
 .container {
   padding: 16px;
-}
-
-.new_container {
-  border: 3px solid #f1f1f1;
-  width: 50%;
-  margin: 20px auto 0;
-}
-/* The "Forgot password" text */
-span.psw {
-  float: right;
-  padding-top: 16px;
-}
-
-#fgt_info
-{
-  display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
-  margin-bottom: 10px;
 }

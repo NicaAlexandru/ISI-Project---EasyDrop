@@ -9,6 +9,9 @@ import { HttpClientModule} from "@angular/common/http";
 import {AppClientBasemap} from "./pages/Map/CLIENT/app-client.basemap";
 import {AppCourierBasemap} from "./pages/Map/COURIER/app-courier.basemap";
 import {AppSellerBasemap} from "./pages/Map/SELLER/app-seller.basemap";
+import {AppForgotPassword} from "./pages/Forms/app.forgotPassword";
+import {AppForgotUsername} from "./pages/Forms/app.forgotUsername";
+import {AppGetUsername} from "./pages/Forms/app.getUsername";
 
 /*
  Bootstrap -> the point of start of the application
@@ -18,6 +21,9 @@ import {AppSellerBasemap} from "./pages/Map/SELLER/app-seller.basemap";
     AppComponent,
     AppLoginForm,
     AppSignupForm,
+    AppForgotPassword,
+    AppForgotUsername,
+    AppGetUsername,
     AppClientBasemap,
     AppCourierBasemap,
     AppSellerBasemap
