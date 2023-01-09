@@ -11,6 +11,14 @@ import {
 import { setDefaultOptions, loadModules } from 'esri-loader';
 import esri = __esri; // Esri TypeScript Types
 
+function logOut() {
+  // delete user's session
+  sessionStorage.removeItem("user");
+
+  // redirect user to login page
+  window.location.replace("app.loginForm.html");
+}
+
 @Component({
   selector: "app-basemap",
   templateUrl: "./app-client.basemap.html",
@@ -73,7 +81,7 @@ export class AppClientBasemap implements OnInit, OnDestroy {
         "esri/rest/support/FeatureSet"
       ]);
 
-      esriConfig.apiKey = "AAPK9c35c4e723f74349b3a567f912c4f830Geg15YP_3y6EW9M1hKGNnErJ-gakUO6tZJZzz0DrMxJhHFU8IAOc5JwTdjGjQon-";
+      esriConfig.apiKey = "AAPKfe3dc0a0722d4a95bfbada92a8a38ca7MVE13nbMo5mNYVkJcgWSyhm2PvAVCjw-Q1KtaGIyzldH4eOprJHW1i3c0-QIEwib";
 
       this._Map = Map;
       this._MapView = MapView;
@@ -126,28 +134,16 @@ export class AppClientBasemap implements OnInit, OnDestroy {
   addFeatureLayers() {
     // Trailheads feature layer (points)
     var trailheadsLayer: __esri.FeatureLayer = new this._FeatureLayer({
-      url:
-        "https://services3.arcgis.com/GVgbJbqm8hXASVYi/arcgis/rest/services/Trailheads/FeatureServer/0"
+      url: "https://services.arcgis.com/rmj3YeQ8emb1uPlT/arcgis/rest/services/easy_drop_points_easy_drop_points/FeatureServer/0",
+      popupTemplate: {
+        title: "{name}",
+        content: "{Adresa}"
+      }
     });
 
+    // trailheadsLayer.popupEnabled = true;
+    
     this.map.add(trailheadsLayer);
-
-
-    // Trails feature layer (lines)
-    var trailsLayer: __esri.FeatureLayer = new this._FeatureLayer({
-      url:
-        "https://services3.arcgis.com/GVgbJbqm8hXASVYi/arcgis/rest/services/Trails/FeatureServer/0"
-    });
-
-    this.map.add(trailsLayer, 0);
-
-    // Parks and open spaces (polygons)
-    var parksLayer: __esri.FeatureLayer = new this._FeatureLayer({
-      url:
-        "https://services3.arcgis.com/GVgbJbqm8hXASVYi/arcgis/rest/services/Parks_and_Open_Space/FeatureServer/0"
-    });
-
-    this.map.add(parksLayer, 0);
 
     console.log("feature layers added");
   }
@@ -294,7 +290,7 @@ export class AppClientBasemap implements OnInit, OnDestroy {
       }
     }
 
-    this.addPoint(this.pointCoords[1], this.pointCoords[0]);
+    //this.addPoint(this.pointCoords[1], this.pointCoords[0]);
   }
 
   stopTimer() {
