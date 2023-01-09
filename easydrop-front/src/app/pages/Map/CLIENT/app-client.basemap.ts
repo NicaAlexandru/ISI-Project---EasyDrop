@@ -18,7 +18,6 @@ function logOut() {
   // redirect user to login page
   window.location.replace("app.loginForm.html");
 }
-
 @Component({
   selector: "app-basemap",
   templateUrl: "./app-client.basemap.html",
@@ -51,12 +50,12 @@ export class AppClientBasemap implements OnInit, OnDestroy {
   // Attributes
   zoom = 11.2;
   center: Array<number> = [26.115875, 44.439322];
-  basemap = "streets-vector";
   loaded = false;
   pointCoords: number[] = [26.115875, 44.439322];
   dir: number = 0;
   count: number = 0;
   timeoutHandler = null;
+  basemap = null;
 
   constructor() { }
 
@@ -68,7 +67,8 @@ export class AppClientBasemap implements OnInit, OnDestroy {
       setDefaultOptions({ css: true });
 
       // Load the modules for the ArcGIS API for JavaScript
-      const [esriConfig, Map, MapView, FeatureLayer, Graphic, Point, GraphicsLayer, route, RouteParameters, FeatureSet] = await loadModules([
+      const [esriConfig, Map, MapView, FeatureLayer, Graphic, Point, GraphicsLayer, route, RouteParameters, FeatureSet,
+        Basemap, VectorTileLayer] = await loadModules([
         "esri/config",
         "esri/Map",
         "esri/views/MapView",
@@ -78,10 +78,12 @@ export class AppClientBasemap implements OnInit, OnDestroy {
         "esri/layers/GraphicsLayer",
         "esri/rest/route",
         "esri/rest/support/RouteParameters",
-        "esri/rest/support/FeatureSet"
+        "esri/rest/support/FeatureSet",
+        "esri/Basemap",
+        "esri/layers/VectorTileLayer"
       ]);
 
-      esriConfig.apiKey = "AAPKfe3dc0a0722d4a95bfbada92a8a38ca7MVE13nbMo5mNYVkJcgWSyhm2PvAVCjw-Q1KtaGIyzldH4eOprJHW1i3c0-QIEwib";
+      esriConfig.apiKey = "AAPK9c35c4e723f74349b3a567f912c4f830Geg15YP_3y6EW9M1hKGNnErJ-gakUO6tZJZzz0DrMxJhHFU8IAOc5JwTdjGjQon-";
 
       this._Map = Map;
       this._MapView = MapView;
@@ -92,6 +94,16 @@ export class AppClientBasemap implements OnInit, OnDestroy {
       this._RouteParameters = RouteParameters;
       this._FeatureSet = FeatureSet;
       this._Point = Point;
+
+      this.basemap = new Basemap({
+        baseLayers: [
+          new VectorTileLayer({
+            portalItem: {
+              id: "031b3b2b4d46485fb51e159e0d98d5c6"
+            }
+          })
+        ]
+      });
 
       // Configure the Map
       const mapProperties = {
@@ -130,6 +142,10 @@ export class AppClientBasemap implements OnInit, OnDestroy {
     }
   }
 
+  resetBasemap() {
+    this.center= [26.115875, 44.439322];
+    this.pointCoords = [26.115875, 44.439322];
+  }
 
   addFeatureLayers() {
     // Trailheads feature layer (points)
@@ -142,7 +158,7 @@ export class AppClientBasemap implements OnInit, OnDestroy {
     });
 
     // trailheadsLayer.popupEnabled = true;
-    
+
     this.map.add(trailheadsLayer);
 
     console.log("feature layers added");
@@ -168,7 +184,7 @@ export class AppClientBasemap implements OnInit, OnDestroy {
       geometry: point,
       symbol: simpleMarkerSymbol
     });
-    this.graphicsLayer.add(this.pointGraphic);
+    //this.graphicsLayer.add(this.pointGraphic);
   }
 
   removePoint() {
@@ -259,7 +275,7 @@ export class AppClientBasemap implements OnInit, OnDestroy {
     this.timeoutHandler = setTimeout(() => {
       // code to execute continuously until the view is closed
       // ...
-      this.animatePointDemo();
+      //this.animatePointDemo();
       this.runTimer();
     }, 200);
   }

@@ -35,7 +35,7 @@
 
 .topnav b.title {
   font-size: 28px;
-  margin-left: 40%;
+  margin-left: 42.5%;
   color: white;
 }
 
@@ -45,15 +45,19 @@
   padding: 30px 16px;
   display: block;
 }
-/* Change the color of links on hover */
-.topnav a:hover {
-  background-color: #ddd;
-  color: black;
-}
 
 /* Add a color to the active/current link */
 .topnav a.active {
   background-color: #04AA6D;
   color: white;
   padding: 22px 16px;
+}
+
+.topnav a.logout {
+  background-color: #04AA6D;
+  color: white;
+  padding: 22px 16px;
+  position:absolute;
+  top:0;
+  right:0;
 }

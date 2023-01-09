@@ -43,7 +43,7 @@ export class AppSellerBasemap implements OnInit, OnDestroy {
   // Attributes
   zoom = 11.2;
   center: Array<number> = [26.115875, 44.439322];
-  basemap = "streets-vector";
+  basemap = null;
   loaded = false;
   pointCoords: number[] = [26.115875, 44.439322];
   dir: number = 0;
@@ -60,7 +60,8 @@ export class AppSellerBasemap implements OnInit, OnDestroy {
       setDefaultOptions({ css: true });
 
       // Load the modules for the ArcGIS API for JavaScript
-      const [esriConfig, Map, MapView, FeatureLayer, Graphic, Point, GraphicsLayer, route, RouteParameters, FeatureSet] = await loadModules([
+      const [esriConfig, Map, MapView, FeatureLayer, Graphic, Point, GraphicsLayer, route, RouteParameters, FeatureSet,
+        Basemap, VectorTileLayer] = await loadModules([
         "esri/config",
         "esri/Map",
         "esri/views/MapView",
@@ -70,7 +71,9 @@ export class AppSellerBasemap implements OnInit, OnDestroy {
         "esri/layers/GraphicsLayer",
         "esri/rest/route",
         "esri/rest/support/RouteParameters",
-        "esri/rest/support/FeatureSet"
+        "esri/rest/support/FeatureSet",
+        "esri/Basemap",
+        "esri/layers/VectorTileLayer"
       ]);
 
       esriConfig.apiKey = "AAPK9c35c4e723f74349b3a567f912c4f830Geg15YP_3y6EW9M1hKGNnErJ-gakUO6tZJZzz0DrMxJhHFU8IAOc5JwTdjGjQon-";
@@ -84,6 +87,16 @@ export class AppSellerBasemap implements OnInit, OnDestroy {
       this._RouteParameters = RouteParameters;
       this._FeatureSet = FeatureSet;
       this._Point = Point;
+
+      this.basemap = new Basemap({
+        baseLayers: [
+          new VectorTileLayer({
+            portalItem: {
+              id: "031b3b2b4d46485fb51e159e0d98d5c6"
+            }
+          })
+        ]
+      });
 
       // Configure the Map
       const mapProperties = {
@@ -172,7 +185,7 @@ export class AppSellerBasemap implements OnInit, OnDestroy {
       geometry: point,
       symbol: simpleMarkerSymbol
     });
-    this.graphicsLayer.add(this.pointGraphic);
+    //this.graphicsLayer.add(this.pointGraphic);
   }
 
   removePoint() {
@@ -263,7 +276,7 @@ export class AppSellerBasemap implements OnInit, OnDestroy {
     this.timeoutHandler = setTimeout(() => {
       // code to execute continuously until the view is closed
       // ...
-      this.animatePointDemo();
+      //this.animatePointDemo();
       this.runTimer();
     }, 200);
   }
