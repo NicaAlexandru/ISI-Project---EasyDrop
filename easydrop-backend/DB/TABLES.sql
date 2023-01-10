@@ -20,7 +20,9 @@ CREATE TABLE SELLER (
 
 --CURIER
 CREATE TABLE COURIER (
-	id_courier varchar(60) UNIQUE REFERENCES APP_USER (id_user)
+	id_courier varchar(60) UNIQUE REFERENCES APP_USER (id_user),
+	x_coord varchar(20),
+	y_coord varchar(20)
 );
 
 --BOX LIVRARE
@@ -42,7 +44,10 @@ CREATE TABLE COMMAND (
 --DEPOZIT
 CREATE TABLE STOREHOUSE (
 	id_storehouse varchar(60) PRIMARY KEY,
-	id_seller varchar(60) REFERENCES SELLER (id_seller)
+	id_seller varchar(60) REFERENCES SELLER (id_seller),
+	storehouse_name varchar(240),
+	x_coord varchar(20),
+	y_coord varchar(20)
 );
 
 --PRODUS
