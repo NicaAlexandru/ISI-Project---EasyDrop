@@ -153,7 +153,7 @@ export class AppClientBasemap implements OnInit, OnDestroy {
       url: "https://services.arcgis.com/rmj3YeQ8emb1uPlT/arcgis/rest/services/easy_drop_points_easy_drop_points/FeatureServer/0",
       popupTemplate: {
         title: "{name}",
-        content: "{Adresa}"
+        content: "Nr. punct: {Adresa}<br> Coordonta x: {x_coord}<br> Coordonata y: {y_coord}"
       }
     });
 
