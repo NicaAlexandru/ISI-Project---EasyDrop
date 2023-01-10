@@ -185,7 +185,7 @@ export class AppSellerBasemap implements OnInit, OnDestroy {
       geometry: point,
       symbol: simpleMarkerSymbol
     });
-    //this.graphicsLayer.add(this.pointGraphic);
+    this.graphicsLayer.add(this.pointGraphic);
   }
 
   removePoint() {

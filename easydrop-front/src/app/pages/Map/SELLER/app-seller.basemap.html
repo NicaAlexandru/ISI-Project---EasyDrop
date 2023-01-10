@@ -4,5 +4,14 @@
   <a class="active" href="seller-basemap" onclick="resetBasemap()">Home</a>
   <b class="title">EasyBox</b>
   <a class="subtitle">Seller</a>
+  <!-- <a class="shop"><button onclick="addShop()"> Add shop</button></a> -->
   <a class="logout" href="login" onclick="">Log out</a>
 </div>
+
+<form>
+  <input id="x-coord" placeholder="x-coord">
+  <input id="y-coord" placeholder="y-coord">
+  <button onClick="addPoint(document.getElementById('x-coord').value, document.getElementById('y-coord').value)">
+    Add Point
+  </button>
+</form>

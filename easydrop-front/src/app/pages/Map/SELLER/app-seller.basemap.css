@@ -61,3 +61,13 @@
   top:0;
   right:0;
 }
+
+.topnav a.shop {
+  background-color: #04AA6D;
+  color: white;
+  padding: 22px 16px;
+  /* position:absolute; */
+  top:0;
+  /* right:40; */
+  /* left:30; */
+}
