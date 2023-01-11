@@ -103,7 +103,7 @@ public class UsersCLI {
         }
 
         if (userType.equals("COURIER")) {
-            Courier new_courier = new Courier(user.getIdUser());
+            Courier new_courier = new Courier(user.getIdUser(), "N/A", "N/A");
             Courier added_courier = courierService.addCourier(new_courier);
             responses.add(new ResponseEntity<Courier>(added_courier, HttpStatus.CREATED));
         }

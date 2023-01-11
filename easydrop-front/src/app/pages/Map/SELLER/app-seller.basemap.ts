@@ -9,7 +9,9 @@ import {
   OnDestroy
 } from "@angular/core";
 import { setDefaultOptions, loadModules } from 'esri-loader';
-import esri = __esri; // Esri TypeScript Types
+import esri = __esri;
+import {Storehouse} from "../../../models/storehouse";
+import {addFeatures} from "@esri/arcgis-rest-feature-service";
 
 @Component({
   selector: "app-seller-basemap",
@@ -137,32 +139,39 @@ export class AppSellerBasemap implements OnInit, OnDestroy {
 
 
   addFeatureLayers() {
-    // Trailheads feature layer (points)
-    var trailheadsLayer: __esri.FeatureLayer = new this._FeatureLayer({
-      url:
-        "https://services3.arcgis.com/GVgbJbqm8hXASVYi/arcgis/rest/services/Trailheads/FeatureServer/0"
-    });
+    var storehouseLayer: __esri.FeatureLayer = new this._FeatureLayer({
+      url: "https://services5.arcgis.com/ObTnNYKRHBBDNxkd/arcgis/rest/services/storehouselayer/FeatureServer/0",
+      popupTemplate: {
+        title: "{name}",
+        content: "Insert: photo + address"
+      }
+    })
 
-    this.map.add(trailheadsLayer);
+    this.map.add(storehouseLayer, 0);
+  }
 
+  async addStorehouse(newStorehouse: Storehouse) {
+    let newStorehouseLayerInstance = {
+      geometry: {
+        x: newStorehouse.xCoord,
+        y: newStorehouse.yCoord
+      },
+      attributes: {
+        storehouseId: newStorehouse.idStorehouse,
+        storehouseName: newStorehouse.storehouseName,
+        storehouseAddress: newStorehouse.storehouseAddress,
+        sellerId: newStorehouse.idSeller
+      }
+    }
 
-    // Trails feature layer (lines)
-    var trailsLayer: __esri.FeatureLayer = new this._FeatureLayer({
-      url:
-        "https://services3.arcgis.com/GVgbJbqm8hXASVYi/arcgis/rest/services/Trails/FeatureServer/0"
-    });
+    let res = await addFeatures({
+      url: 'https://services5.arcgis.com/ObTnNYKRHBBDNxkd/arcgis/rest/services/storehouselayer/FeatureServer/0',
+      features: [newStorehouseLayerInstance],
+    })
 
-    this.map.add(trailsLayer, 0);
-
-    // Parks and open spaces (polygons)
-    var parksLayer: __esri.FeatureLayer = new this._FeatureLayer({
-      url:
-        "https://services3.arcgis.com/GVgbJbqm8hXASVYi/arcgis/rest/services/Parks_and_Open_Space/FeatureServer/0"
-    });
-
-    this.map.add(parksLayer, 0);
-
-    console.log("feature layers added");
+    res.addResults.forEach(res=>{
+      console.log(res)
+    })
   }
 
   addPoint(lat: number, lng: number) {

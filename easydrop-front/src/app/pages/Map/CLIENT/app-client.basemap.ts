@@ -148,8 +148,7 @@ export class AppClientBasemap implements OnInit, OnDestroy {
   }
 
   addFeatureLayers() {
-    // Trailheads feature layer (points)
-    var trailheadsLayer: __esri.FeatureLayer = new this._FeatureLayer({
+    var easyDropLayer: __esri.FeatureLayer = new this._FeatureLayer({
       url: "https://services.arcgis.com/rmj3YeQ8emb1uPlT/arcgis/rest/services/easy_drop_points_easy_drop_points/FeatureServer/0",
       popupTemplate: {
         title: "{name}",
@@ -157,9 +156,7 @@ export class AppClientBasemap implements OnInit, OnDestroy {
       }
     });
 
-    // trailheadsLayer.popupEnabled = true;
-
-    this.map.add(trailheadsLayer);
+    this.map.add(easyDropLayer);
 
     console.log("feature layers added");
   }
