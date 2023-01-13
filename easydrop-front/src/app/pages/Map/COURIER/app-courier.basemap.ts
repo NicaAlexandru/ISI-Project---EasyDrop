@@ -10,7 +10,9 @@ import {
 } from "@angular/core";
 import { setDefaultOptions, loadModules} from 'esri-loader';
 // @ts-ignore
-import esri = __esri; // Esri TypeScript Types
+import esri = __esri;
+import {AppUser} from "../../../models/appUser";
+import {DataService} from "../../../services/data.service"; // Esri TypeScript Types
 
 @Component({
   selector: "app-courier-basemap",
@@ -52,7 +54,10 @@ export class AppCourierBasemap implements OnInit, OnDestroy {
   timeoutHandler = null;
   basemap = null;
 
-  constructor() { }
+  courier: AppUser = new AppUser("N/A", "N/A", "N/A", "N/A",
+    "N/A");
+
+  constructor(private dataService: DataService) { }
 
   // @ts-ignore
   async initializeMap() {
@@ -330,6 +335,10 @@ export class AppCourierBasemap implements OnInit, OnDestroy {
       // The map has been initialized
       console.log("mapView ready: ", this.view.ready);
       this.loaded = this.view.ready;
+      if (this.dataService.getLoggedCourier() != null) {
+        // @ts-ignore
+        this.courier = this.dataService.getLoggedCourier();
+      }
       this.mapLoadedEvent.emit(true);
       this.runTimer();
     });

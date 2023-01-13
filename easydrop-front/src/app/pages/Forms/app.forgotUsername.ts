@@ -20,7 +20,7 @@ export class AppForgotUsername {
     this.appUserService.getAppUserByEmail(userItem.email).subscribe(
       (response: AppUser) => {
         this.appUser = response;
-        this.dataService.appUser = this.appUser
+        this.dataService.setForgotUserDetails(this.appUser);
         this.router.navigate(['/get-username'])
       },
       (error: HttpErrorResponse) => {

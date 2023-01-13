@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="appUser != null">
   <p style="font-size:35px;text-align: center;color:green">Success!</p>
   <p style="font-size:20px;text-align: center">Your username is: {{appUser.userName}}</p>
   <p style="text-align: center"><a href="login">Return to the login page</a></p>

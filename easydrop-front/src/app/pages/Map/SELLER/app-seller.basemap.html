@@ -4,45 +4,62 @@
   <meta charset="UTF-8">
   <title>EasyDrop - Seller </title>
 </head>
+
 <body>
 
   <div #mapViewNode></div>
 
-  <div class="topnav">
+  <div class="topnav" *ngIf="seller != null">
     <a class="active" href="seller-basemap" onclick="resetBasemap()">Home</a>
     <b class="title">EasyDrop</b>
     <a class="subtitle">Seller</a>
     <a class="logout" href="login" onclick="">Log out</a>
+    <a class="logged_user"> User: {{seller.userName}}</a>
   </div>
 
+  <!-- ADD STOREHOUSE LOGIC -->
   <button type="button" class="add_store_button"
           onclick="document.getElementById('storehouse_form').style.display = 'block'
                    document.getElementById('storehouse_form').style.border = '5px solid #f1f1f1'">Add Storehouse</button>
-  <form>
+  <form #addStorehouseForm="ngForm"
+        (ngSubmit)="onSubmit(addStorehouseForm.value)">
     <div id='storehouse_form' class="container" style="display: none; border:0">
       <a style="display: inline; margin-left: 10px;
                 font-size: x-large; font-weight:bold"> Complete the fields to add the Store</a>
 
       <span onclick="this.parentElement.style.display='none';
-                     this.parentElement.style.border='0px'" class="closebtn"
+                     this.parentElement.style.border='0px';
+                     document.getElementById('name').value = '';
+                     document.getElementById('address').value = '';
+                     document.getElementById('x_coord').value = '';
+                     document.getElementById('y_coord').value = '';
+                    " class="closebtn"
       style="text-align: right; font-size: 45px; display: inline;  float:right">
         &times;
       </span>
       <br><br>
 
-      <label for="storehouseName" style="font-weight:bold; margin-left: 10px">Name</label>
-      <input type="text" id="storehouseName" placeholder="Enter a storehouse name" name="storehouseName">
+      <label for="name" style="font-weight:bold; margin-left: 10px">Name</label>
+      <span class="asterisk_input">  </span>
+      <input type="text" id="name" placeholder="Enter a storehouse name" name="storehouseName" ngModel required>
 
-      <label for="storehouseAddress" style="font-weight:bold; margin-left: 10px">Address</label>
-      <input type="text" id="storehouseAddress" placeholder="Enter the storehouse address" name="storehouseAddress">
+      <label for="address" style="font-weight:bold; margin-left: 10px">Address</label>
+      <span class="asterisk_input">  </span>
+      <input type="text" id="address" placeholder="Enter the storehouse address" name="storehouseAddress" ngModel required>
 
-      <label for="xCoord" style="font-weight:bold; margin-left: 10px">Longitude (X)</label>
-      <input type="text" id="xCoord" placeholder="Enter the storehouse longitude" name="xCoord">
+      <label for="x_coord" style="font-weight:bold; margin-left: 10px">Longitude (X)</label>
+      <span class="asterisk_input">  </span>
+      <input type="number" id="x_coord" placeholder="Enter the storehouse longitude" name="xcoord" ngModel required>
 
-      <label for="yCoord" style="font-weight:bold; margin-left: 10px">Latitude (Y)</label>
-      <input type="text" id="yCoord" placeholder="Enter the storehouse latitude" name="yCoord">
+      <label for="y_coord" style="font-weight:bold; margin-left: 10px">Latitude (Y)</label>
+      <span class="asterisk_input">  </span>
+      <input type="number" id="y_coord" placeholder="Enter the storehouse latitude" name="ycoord" ngModel required>
 
-      <button type="submit" class="storehouse_submit_button" style="font-weight:bold; font-size: medium">Submit</button>
+      <label for="imgurl" style="font-weight:bold; margin-left: 10px">Image URL</label>
+      <input type=text id="imgurl" placeholder="Enter the image URL (optional)" name="imgURL" ngModel>
+
+      <button type="submit" class="storehouse_submit_button" style="font-weight:bold; font-size: medium"
+              onclick="this.parentElement.style.display='none'; this.parentElement.style.border='0px'">Submit</button>
 
     </div>
   </form>

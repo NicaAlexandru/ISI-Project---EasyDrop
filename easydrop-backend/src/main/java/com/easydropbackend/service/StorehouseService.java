@@ -38,4 +38,8 @@ public class StorehouseService {
     public void deleteStorehouse(String idStorehouse) {
         storehouseRepository.deleteStorehouseByIdStorehouse(idStorehouse);
     }
+
+    public List<Storehouse> findStorehouseByIdSeller(String id_seller) {
+        return storehouseRepository.findByIdSeller(id_seller).orElse(null);
+    }
 }

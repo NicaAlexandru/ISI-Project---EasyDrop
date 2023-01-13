@@ -3,6 +3,7 @@ import { AppUser } from '../../models/appUser'
 import {AppUserService} from "../../services/appUser.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {Router} from "@angular/router";
+import {DataService} from "../../services/data.service";
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,8 @@ export class AppLoginForm {
 
   public appUser!: AppUser;
 
-  constructor(private appUserService: AppUserService, private router: Router) { }
+  constructor(private appUserService: AppUserService, private router: Router,
+              private dataService: DataService) { }
 
   onSubmit(userItem: AppUser) {
     this.appUserService.getAppUserByUserName(userItem.userName).subscribe(
@@ -42,11 +44,15 @@ export class AppLoginForm {
     if (foundUser.userPassword != submittedPassword) {
       alert("Invalid credentials")
     } else {
+      this.dataService.setAppUser(foundUser);
       if (this.appUser.userType == "CLIENT") {
+        this.dataService.setLoggedClient(foundUser);
         this.router.navigate(['/client-basemap']);
       } else if (this.appUser.userType == "SELLER") {
+        this.dataService.setLoggedSeller(foundUser);
         this.router.navigate(['/seller-basemap'])
       } else if (this.appUser.userType == "COURIER") {
+        this.dataService.setLoggedCourier(foundUser);
         this.router.navigate(['/courier-basemap'])
       }
     }

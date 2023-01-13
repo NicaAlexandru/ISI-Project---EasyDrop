@@ -12,6 +12,10 @@ import { setDefaultOptions, loadModules } from 'esri-loader';
 import esri = __esri;
 import {Storehouse} from "../../../models/storehouse";
 import {addFeatures} from "@esri/arcgis-rest-feature-service";
+import {AppUser} from "../../../models/appUser";
+import {DataService} from "../../../services/data.service";
+import {StorehouseService} from "../../../services/storehouse.service";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: "app-seller-basemap",
@@ -52,7 +56,9 @@ export class AppSellerBasemap implements OnInit, OnDestroy {
   count: number = 0;
   timeoutHandler = null;
 
-  constructor() { }
+  seller: AppUser = new AppUser("N/A", "N/A", "N/A", "N/A",
+                                "N/A");
+  constructor(private dataService: DataService, private storehouseService: StorehouseService) { }
 
   // @ts-ignore
   async initializeMap() {
@@ -139,11 +145,75 @@ export class AppSellerBasemap implements OnInit, OnDestroy {
 
 
   addFeatureLayers() {
+    var render_logos = {
+      type: "unique-value",
+      field: "sellerName",
+      uniqueValueInfos: [
+        {
+          value: "ALTEX",
+          symbol: {
+            type: "picture-marker",
+            url: "https://andpskir6jjwuens.maps.arcgis.com/sharing/rest/content/items/a52aca1c0be0434b85241f715640b32b/data",
+            width: "25px",
+            height: "25px"
+          }
+        },
+        {
+          value: "FLANCO",
+          symbol: {
+            type: "picture-marker",
+            url: "https://andpskir6jjwuens.maps.arcgis.com/sharing/rest/content/items/586836d484b8459cb9a583d5c8bc9873/data",
+            width: "30px",
+            height: "30px"
+          }
+        },
+        {
+          value: "EMAG",
+          symbol: {
+            type: "picture-marker",
+            url: "https://andpskir6jjwuens.maps.arcgis.com/sharing/rest/content/items/1dc4c883299e48c2bc7c974602a54202/data",
+            width: "30px",
+            height: "30px"
+          }
+        },
+        {
+          value: "STORE",
+          symbol: {
+            type: "picture-marker",
+            url: "https://andpskir6jjwuens.maps.arcgis.com/sharing/rest/content/items/53373f6cfb3b48af83f60d76691ff8a4/data",
+            width: "30px",
+            height: "30px"
+          }
+        }
+      ]
+    }
+
     var storehouseLayer: __esri.FeatureLayer = new this._FeatureLayer({
       url: "https://services5.arcgis.com/ObTnNYKRHBBDNxkd/arcgis/rest/services/storehouselayer/FeatureServer/0",
+      renderer: render_logos,
       popupTemplate: {
-        title: "{name}",
-        content: "Insert: photo + address"
+        title: "{storehouseName}",
+        content: [
+          {
+            type: "media",
+            mediaInfos: [
+              {
+                value: {
+                  sourceURL: "{imgURL}"
+                }
+              }
+            ]
+          },
+          {
+            type: "fields",
+            fieldInfos: [
+              {
+                fieldName: "storehouseAddress",
+                visible: true,
+                label: "Address"
+              }
+            ]
+          }]
       }
     })
 
@@ -151,23 +221,28 @@ export class AppSellerBasemap implements OnInit, OnDestroy {
   }
 
   async addStorehouse(newStorehouse: Storehouse) {
+    alert("Building storehouse...")
     let newStorehouseLayerInstance = {
       geometry: {
-        x: newStorehouse.xCoord,
-        y: newStorehouse.yCoord
+        x: newStorehouse.xcoord,
+        y: newStorehouse.ycoord
       },
       attributes: {
         storehouseId: newStorehouse.idStorehouse,
         storehouseName: newStorehouse.storehouseName,
         storehouseAddress: newStorehouse.storehouseAddress,
-        sellerId: newStorehouse.idSeller
+        sellerId: newStorehouse.idSeller,
+        imgURL: newStorehouse.imgURL,
+        sellerName: this.seller.userName
       }
     }
 
     let res = await addFeatures({
-      url: 'https://services5.arcgis.com/ObTnNYKRHBBDNxkd/arcgis/rest/services/storehouselayer/FeatureServer/0',
+      url: "https://services5.arcgis.com/ObTnNYKRHBBDNxkd/arcgis/rest/services/storehouselayer/FeatureServer/0",
       features: [newStorehouseLayerInstance],
     })
+
+    alert("STOREHOUSE ADAUGAT")
 
     res.addResults.forEach(res=>{
       console.log(res)
@@ -327,6 +402,40 @@ export class AppSellerBasemap implements OnInit, OnDestroy {
 
   }
 
+  onSubmit(storehouse: Storehouse) {
+    if (storehouse.storehouseName == '') {
+      alert("Invalid data: please enter a name!");
+    } else if (storehouse.storehouseAddress == '') {
+      alert("Invalid data: please enter an address!");
+    } else if (storehouse.xcoord.toString() == '' ) {
+      alert("Invalid data: please enter a longitude!");
+    } else if (storehouse.ycoord.toString() == '') {
+      alert("Invalid data: please enter a latitude!");
+    }
+
+    // Form the object and send it to the back-end
+    let new_storehouse = new Storehouse(this.seller.idUser, storehouse.storehouseName,
+                                    this.seller.userName, storehouse.storehouseAddress,
+                                    storehouse.xcoord, storehouse.ycoord, storehouse.imgURL);
+
+    //alert(JSON.stringify(new_storehouse))
+
+    // Add the new storehouse to the backend
+    this.storehouseService.addStorehouse(new_storehouse).subscribe(
+      (response: Storehouse) => {
+        // Update the storehouse ID
+        new_storehouse.setIdStorehouse(response.idStorehouse);
+
+        // Add the storehouse to the map
+        this.addStorehouse(new_storehouse);
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+
+  }
+
   ngOnInit() {
     // Initialize MapView and return an instance of MapView
     this.initializeMap().then(() => {
@@ -334,6 +443,10 @@ export class AppSellerBasemap implements OnInit, OnDestroy {
       console.log("mapView ready: ", this.view.ready);
       this.loaded = this.view.ready;
       this.mapLoadedEvent.emit(true);
+      if (this.dataService.getLoggedSeller() != null) {
+        // @ts-ignore
+        this.seller = this.dataService.getLoggedSeller();
+      }
       this.runTimer();
     });
   }

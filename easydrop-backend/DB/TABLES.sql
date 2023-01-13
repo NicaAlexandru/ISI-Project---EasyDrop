@@ -47,7 +47,8 @@ CREATE TABLE STOREHOUSE (
 	id_seller varchar(60) REFERENCES SELLER (id_seller),
 	storehouse_name varchar(240),
 	x_coord varchar(20),
-	y_coord varchar(20)
+	y_coord varchar(20),
+	img_url varchar(200)
 );
 
 --PRODUS

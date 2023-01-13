@@ -27,6 +27,17 @@ public class StoresCLI {
         return new ResponseEntity<>(stores, HttpStatus.OK);
     }
 
+    @GetMapping("/findBySellerId/{id_seller}")
+    public ResponseEntity<List<Storehouse>> getStorehouseByIdSeller(@PathVariable String id_seller) {
+        List<Storehouse> stores = storehouseService.findStorehouseByIdSeller(id_seller);
+
+        // Return an OK http response (200) and the list of users
+        if (stores!= null)
+            return new ResponseEntity<>(stores, HttpStatus.OK);
+
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    }
+
     @GetMapping("/findById/{id_storehouse}")
     public ResponseEntity<Storehouse> getStorehouseByIdStorehouse(@PathVariable String id_storehouse) {
         Storehouse storehouse = storehouseService.findStorehouseById(id_storehouse);
@@ -63,7 +74,7 @@ public class StoresCLI {
     }
 
     /* DeleteMapping is used because we will delete an element from the DB */
-    @DeleteMapping("/update/{id_storehouse}")
+    @DeleteMapping("/delete/{id_storehouse}")
     public ResponseEntity<?> deleteUser(@PathVariable("id_storehouse") String id_storehouse) {
         storehouseService.deleteStorehouse(id_storehouse);
         return new ResponseEntity<>(HttpStatus.OK);

@@ -1,5 +1,5 @@
 .esri-view {
-  height: 830px;
+  height: 850px;
   margin-top: 65px;
 }
 
@@ -41,7 +41,7 @@
 
 .topnav a.subtitle {
   font-size: 20px;
-  margin-left: -6%;
+  margin-left: -6.6%;
   padding: 30px 16px;
   display: block;
 }
@@ -60,4 +60,12 @@
   position:absolute;
   top:0;
   right:0;
+}
+
+.topnav a.logged_user {
+  font-size: large;
+  font-weight:bold;
+  position: absolute;
+  right: 100px;
+  top:20px;
 }

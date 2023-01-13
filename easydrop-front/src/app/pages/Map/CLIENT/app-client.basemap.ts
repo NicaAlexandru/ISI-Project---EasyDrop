@@ -9,7 +9,9 @@ import {
   OnDestroy
 } from "@angular/core";
 import { setDefaultOptions, loadModules } from 'esri-loader';
-import esri = __esri; // Esri TypeScript Types
+import esri = __esri;
+import {AppUser} from "../../../models/appUser";
+import {DataService} from "../../../services/data.service"; // Esri TypeScript Types
 
 function logOut() {
   // delete user's session
@@ -57,7 +59,10 @@ export class AppClientBasemap implements OnInit, OnDestroy {
   timeoutHandler = null;
   basemap = null;
 
-  constructor() { }
+  client: AppUser = new AppUser("N/A", "N/A", "N/A", "N/A",
+    "N/A");
+
+  constructor(private dataService: DataService) { }
 
   // @ts-ignore
   async initializeMap() {
@@ -148,17 +153,79 @@ export class AppClientBasemap implements OnInit, OnDestroy {
   }
 
   addFeatureLayers() {
-    var easyDropLayer: __esri.FeatureLayer = new this._FeatureLayer({
-      url: "https://services.arcgis.com/rmj3YeQ8emb1uPlT/arcgis/rest/services/easy_drop_points_easy_drop_points/FeatureServer/0",
+    var render_logos = {
+      type: "unique-value",
+      field: "sellerName",
+      uniqueValueInfos: [
+        {
+          value: "ALTEX",
+          symbol: {
+            type: "picture-marker",
+            url: "https://andpskir6jjwuens.maps.arcgis.com/sharing/rest/content/items/a52aca1c0be0434b85241f715640b32b/data",
+            width: "25px",
+            height: "25px"
+          }
+        },
+        {
+          value: "FLANCO",
+          symbol: {
+            type: "picture-marker",
+            url: "https://andpskir6jjwuens.maps.arcgis.com/sharing/rest/content/items/586836d484b8459cb9a583d5c8bc9873/data",
+            width: "30px",
+            height: "30px"
+          }
+        },
+        {
+          value: "EMAG",
+          symbol: {
+            type: "picture-marker",
+            url: "https://andpskir6jjwuens.maps.arcgis.com/sharing/rest/content/items/1dc4c883299e48c2bc7c974602a54202/data",
+            width: "30px",
+            height: "30px"
+          }
+        },
+        {
+          value: "STORE",
+          symbol: {
+            type: "picture-marker",
+            url: "https://andpskir6jjwuens.maps.arcgis.com/sharing/rest/content/items/53373f6cfb3b48af83f60d76691ff8a4/data",
+            width: "30px",
+            height: "30px"
+          }
+        }
+      ]
+    }
+
+    var storehouseLayer: __esri.FeatureLayer = new this._FeatureLayer({
+      url: "https://services5.arcgis.com/ObTnNYKRHBBDNxkd/arcgis/rest/services/storehouselayer/FeatureServer/0",
+      renderer: render_logos,
       popupTemplate: {
-        title: "{name}",
-        content: "Nr. punct: {Adresa}<br> Coordonta x: {x_coord}<br> Coordonata y: {y_coord}"
+        title: "{storehouseName}",
+        content: [
+          {
+            type: "media",
+            mediaInfos: [
+              {
+                value: {
+                  sourceURL: "{imgURL}"
+                }
+              }
+            ]
+          },
+          {
+            type: "fields",
+            fieldInfos: [
+              {
+                fieldName: "storehouseAddress",
+                visible: true,
+                label: "Address"
+              }
+            ]
+          }]
       }
-    });
+    })
 
-    this.map.add(easyDropLayer);
-
-    console.log("feature layers added");
+    this.map.add(storehouseLayer, 0);
   }
 
   addPoint(lat: number, lng: number) {
@@ -320,6 +387,10 @@ export class AppClientBasemap implements OnInit, OnDestroy {
       // The map has been initialized
       console.log("mapView ready: ", this.view.ready);
       this.loaded = this.view.ready;
+      if (this.dataService.getLoggedClient() != null) {
+        // @ts-ignore
+        this.client = this.dataService.getLoggedClient();
+      }
       this.mapLoadedEvent.emit(true);
       this.runTimer();
     });

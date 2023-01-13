@@ -28,4 +28,7 @@ public class Storehouse {
 
     @Column(name="y_coord")
     private String yCoord;
+
+    @Column(name="img_url")
+    private String imgURL;
 }

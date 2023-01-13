@@ -10,11 +10,11 @@ import {AppUser} from "../../models/appUser";
   styleUrls: ['./app.getUsername.css']
 })
 export class AppGetUsername {
-  public appUser!: AppUser;
+  public appUser!: AppUser | null;
 
   constructor(private dataService: DataService, private router: Router) { }
 
   ngOnInit() {
-    this.appUser = this.dataService.appUser;
+    this.appUser = this.dataService.getForgotDetails();
   }
 }
