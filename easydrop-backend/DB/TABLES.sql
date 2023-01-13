@@ -54,7 +54,7 @@ CREATE TABLE STOREHOUSE (
 --PRODUS
 CREATE TABLE PRODUCT (
 	id_product varchar(60) PRIMARY KEY,
-	id_command varchar(60) REFERENCES COMMAND (id_command),
+	id_command varchar(60),
 	id_storehouse varchar(60) REFERENCES STOREHOUSE (id_storehouse),
 	product_name varchar(40),
 	product_description varchar(40),

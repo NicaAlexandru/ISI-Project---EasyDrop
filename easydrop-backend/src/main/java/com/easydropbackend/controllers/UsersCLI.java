@@ -25,7 +25,6 @@ public class UsersCLI {
     private final AppUserService appUserService;
     private final ClientService clientService;
     private final SellerService sellerService;
-
     private final CourierService courierService;
     private static final Logger logger = LoggerFactory.getLogger(AppUserService.class);
 

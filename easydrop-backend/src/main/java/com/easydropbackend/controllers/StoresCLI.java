@@ -23,7 +23,7 @@ public class StoresCLI {
     public ResponseEntity<List<Storehouse>> getAllStores() {
         List<Storehouse> stores = storehouseService.findAllStores();
 
-        // Return an OK http response (200) and the list of users
+        // Return an OK http response (200) and the list of stores
         return new ResponseEntity<>(stores, HttpStatus.OK);
 
     }
