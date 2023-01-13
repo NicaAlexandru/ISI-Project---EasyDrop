@@ -14,6 +14,7 @@ export class AppUser {
     this.email = email;
     this.userType = userType;
     this.phoneNumber = phoneNumber;
+
   }
 
   setIdUser(idUser: string) {
