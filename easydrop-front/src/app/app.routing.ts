@@ -5,6 +5,7 @@ import {AppClientBasemap} from "./pages/Map/CLIENT/app-client.basemap";
 import {AppSellerBasemap} from "./pages/Map/SELLER/app-seller.basemap";
 import {AppCourierBasemap} from "./pages/Map/COURIER/app-courier.basemap";
 import {AppForgotPassword} from "./pages/Forms/app.forgotPassword";
+import {AppGetPassword} from "./pages/Forms/app.getPassword";
 import {AppForgotUsername} from "./pages/Forms/app.forgotUsername";
 import {AppGetUsername} from "./pages/Forms/app.getUsername";
 
@@ -17,6 +18,7 @@ const appRoutes: Routes = [
   { path: 'seller-basemap', component: AppSellerBasemap },
   { path: 'courier-basemap', component: AppCourierBasemap },
   { path: 'forgot-password', component: AppForgotPassword },
+  { path: 'get-password', component: AppGetPassword },
   { path: 'forgot-username', component: AppForgotUsername },
   { path: 'get-username', component: AppGetUsername}
 ];

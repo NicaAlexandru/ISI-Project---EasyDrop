@@ -10,6 +10,7 @@ import {AppClientBasemap} from "./pages/Map/CLIENT/app-client.basemap";
 import {AppCourierBasemap} from "./pages/Map/COURIER/app-courier.basemap";
 import {AppSellerBasemap} from "./pages/Map/SELLER/app-seller.basemap";
 import {AppForgotPassword} from "./pages/Forms/app.forgotPassword";
+import {AppGetPassword} from "./pages/Forms/app.getPassword";
 import {AppForgotUsername} from "./pages/Forms/app.forgotUsername";
 import {AppGetUsername} from "./pages/Forms/app.getUsername";
 
@@ -26,7 +27,8 @@ import {AppGetUsername} from "./pages/Forms/app.getUsername";
     AppGetUsername,
     AppClientBasemap,
     AppCourierBasemap,
-    AppSellerBasemap
+    AppSellerBasemap,
+    AppGetPassword
   ],
   imports: [
     BrowserModule,
