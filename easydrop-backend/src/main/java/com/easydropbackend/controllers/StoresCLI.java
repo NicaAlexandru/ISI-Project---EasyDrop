@@ -25,6 +25,7 @@ public class StoresCLI {
 
         // Return an OK http response (200) and the list of users
         return new ResponseEntity<>(stores, HttpStatus.OK);
+
     }
 
     @GetMapping("/findBySellerId/{id_seller}")
