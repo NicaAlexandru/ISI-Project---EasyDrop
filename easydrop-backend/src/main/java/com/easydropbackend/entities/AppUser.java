@@ -43,5 +43,6 @@ public class AppUser implements Serializable {
         this.userType = userType;
         this.userName = userName;
         this.phoneNumber = phoneNumber;
+
     }
 }
