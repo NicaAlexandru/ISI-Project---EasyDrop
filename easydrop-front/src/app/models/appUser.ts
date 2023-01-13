@@ -8,6 +8,7 @@ export class AppUser {
   userType: string;
   phoneNumber: string;
 
+
   constructor(userName: string, userPassword: string, email: string, userType: string, phoneNumber: string) {
     this.userName = userName;
     this.userPassword = userPassword;
