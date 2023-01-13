@@ -69,3 +69,35 @@
   right: 100px;
   top:20px;
 }
+
+.filter_store_button {
+  position: absolute;
+  top:100px;
+  right: 30px;
+  z-index: 110;
+  height: 40px;
+  background: whitesmoke;
+  border: 1px solid lightgray;
+  font-size: medium;
+}
+
+form {
+  width: 12.5%;
+  z-index: 110;
+  position: fixed;
+  top: 16%;
+  right: 1.74%;
+  margin: 0 auto;
+  background: whitesmoke;
+}
+
+.filter_submit_button {
+  background-color: #04AA6D;
+  color: white;
+  padding: 5px 5px;
+  display: block;
+  border: none;
+  margin: 0 auto;
+  cursor: pointer;
+  width: 40%;
+}

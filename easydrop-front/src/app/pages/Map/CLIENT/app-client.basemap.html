@@ -7,3 +7,34 @@
   <a class="logout" href="login" onclick="logOut()">Log out</a>
   <a class="logged_user"> User: {{client.userName}}</a>
 </div>
+
+<!-- FILTER STOREHOUSE LOGIC -->
+<button type="button" class="filter_store_button"
+        onclick="document.getElementById('filter_form').style.display = 'block'
+                 document.getElementById('filter_form').style.border = '5px solid #f1f1f1'
+                ">Filter Stores</button>
+
+<form #filterStorehouseForm="ngForm"
+      (ngSubmit)="filterSubmit(filterStorehouseForm.value)">
+  <div id='filter_form' class="container" style="display: none; border:0">
+    <span onclick="this.parentElement.style.display='none';
+                     this.parentElement.style.border='0px';
+                    " class="closebtn" style="text-align: right; font-size: 45px; display: inline;  float:right">
+        &times;
+    </span>
+
+    <input type="checkbox" id="altex_tick" name="altex" value="ALTEX" ngModel>
+    <label for="altex_tick" style="font-weight:bold"> ALTEX </label><br>
+
+    <input type="checkbox" id="flanco_tick" name="flanco" value="FLANCO" ngModel>
+    <label for="flanco_tick" style="font-weight:bold"> FLANCO </label><br>
+
+    <input type="checkbox" id="emag_tick" name="emag" value="EMAG" ngModel>
+    <label for="emag_tick" style="font-weight:bold"> EMAG </label><br>
+
+    <input type="checkbox" id="other_tick" name="other" value="OTHERS" ngModel>
+    <label for="other_tick" style="font-weight:bold"> OTHERS </label><br><br>
+
+    <button type="submit" class="filter_submit_button" style="font-weight:bold; font-size: medium">Filter</button>
+  </div>
+</form>

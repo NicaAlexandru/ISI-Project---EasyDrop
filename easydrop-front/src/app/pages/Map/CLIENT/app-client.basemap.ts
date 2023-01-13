@@ -58,6 +58,7 @@ export class AppClientBasemap implements OnInit, OnDestroy {
   count: number = 0;
   timeoutHandler = null;
   basemap = null;
+  storehouseLayer: __esri.FeatureLayer;
 
   client: AppUser = new AppUser("N/A", "N/A", "N/A", "N/A",
     "N/A");
@@ -162,17 +163,17 @@ export class AppClientBasemap implements OnInit, OnDestroy {
           symbol: {
             type: "picture-marker",
             url: "https://andpskir6jjwuens.maps.arcgis.com/sharing/rest/content/items/a52aca1c0be0434b85241f715640b32b/data",
-            width: "25px",
-            height: "25px"
+            width: "26px",
+            height: "26px"
           }
         },
         {
           value: "FLANCO",
           symbol: {
             type: "picture-marker",
-            url: "https://andpskir6jjwuens.maps.arcgis.com/sharing/rest/content/items/586836d484b8459cb9a583d5c8bc9873/data",
-            width: "30px",
-            height: "30px"
+            url: "https://andpskir6jjwuens.maps.arcgis.com/sharing/rest/content/items/f4195c24cc054a72ac1a8e636641862e/data",
+            width: "26px",
+            height: "26px"
           }
         },
         {
@@ -180,23 +181,23 @@ export class AppClientBasemap implements OnInit, OnDestroy {
           symbol: {
             type: "picture-marker",
             url: "https://andpskir6jjwuens.maps.arcgis.com/sharing/rest/content/items/1dc4c883299e48c2bc7c974602a54202/data",
-            width: "30px",
-            height: "30px"
+            width: "26px",
+            height: "26px"
           }
         },
         {
           value: "STORE",
           symbol: {
             type: "picture-marker",
-            url: "https://andpskir6jjwuens.maps.arcgis.com/sharing/rest/content/items/53373f6cfb3b48af83f60d76691ff8a4/data",
-            width: "30px",
-            height: "30px"
+            url: "https://andpskir6jjwuens.maps.arcgis.com/sharing/rest/content/items/3f7c3d1dd2cf400e93d75d8943ec55bf/data",
+            width: "26px",
+            height: "26px"
           }
         }
       ]
     }
 
-    var storehouseLayer: __esri.FeatureLayer = new this._FeatureLayer({
+    this.storehouseLayer = new this._FeatureLayer({
       url: "https://services5.arcgis.com/ObTnNYKRHBBDNxkd/arcgis/rest/services/storehouselayer/FeatureServer/0",
       renderer: render_logos,
       popupTemplate: {
@@ -225,7 +226,7 @@ export class AppClientBasemap implements OnInit, OnDestroy {
       }
     })
 
-    this.map.add(storehouseLayer, 0);
+    this.map.add(this.storehouseLayer, 0);
   }
 
   addPoint(lat: number, lng: number) {
@@ -377,6 +378,43 @@ export class AppClientBasemap implements OnInit, OnDestroy {
     if (this.timeoutHandler != null) {
       clearTimeout(this.timeoutHandler);
       this.timeoutHandler = null;
+    }
+
+  }
+
+  filterSubmit(filteredOption) {
+    if (filteredOption.altex && !filteredOption.emag && !filteredOption.flanco && !filteredOption.other) {
+      this.storehouseLayer.definitionExpression = "sellerName = 'ALTEX";
+    } else if (!filteredOption.altex && filteredOption.emag && !filteredOption.flanco && !filteredOption.other) {
+      this.storehouseLayer.definitionExpression = "sellerName = 'EMAG";
+    } else if (!filteredOption.altex && !filteredOption.emag && filteredOption.flanco && !filteredOption.other) {
+      this.storehouseLayer.definitionExpression = "sellerName = 'FLANCO";
+    } else if (!filteredOption.altex && !filteredOption.emag && !filteredOption.flanco && filteredOption.other) {
+      this.storehouseLayer.definitionExpression = "sellerName = 'STORE";
+    } else if (filteredOption.altex && filteredOption.emag && !filteredOption.flanco && !filteredOption.other) {
+      this.storehouseLayer.definitionExpression ="sellerName = 'ALTEX' OR sellerName = 'EMAG'"
+    } else if (filteredOption.altex && !filteredOption.emag && filteredOption.flanco && !filteredOption.other) {
+      this.storehouseLayer.definitionExpression ="sellerName = 'ALTEX' OR sellerName = 'FLANCO'"
+    } else if (filteredOption.altex && !filteredOption.emag && !filteredOption.flanco && filteredOption.other) {
+      this.storehouseLayer.definitionExpression ="sellerName = 'ALTEX' OR sellerName = 'STORE'"
+    } else if (!filteredOption.altex && filteredOption.emag && filteredOption.flanco && !filteredOption.other) {
+      this.storehouseLayer.definitionExpression ="sellerName = 'EMAG' OR sellerName = 'FLANCO'"
+    } else if (!filteredOption.altex && filteredOption.emag && !filteredOption.flanco && filteredOption.other) {
+      this.storehouseLayer.definitionExpression ="sellerName = 'EMAG' OR sellerName = 'STORE'"
+    } else if (!filteredOption.altex && !filteredOption.emag && filteredOption.flanco && filteredOption.other) {
+      this.storehouseLayer.definitionExpression ="sellerName = 'FLANCO' OR sellerName = 'STORE'"
+    } else if (filteredOption.altex && filteredOption.emag && filteredOption.flanco && !filteredOption.other) {
+      this.storehouseLayer.definitionExpression ="sellerName = 'FLANCO' OR sellerName = 'EMAG' OR sellerName = 'ALTEX'"
+    } else if (!filteredOption.altex && filteredOption.emag && filteredOption.flanco && filteredOption.other) {
+      this.storehouseLayer.definitionExpression ="sellerName = 'FLANCO' OR sellerName = 'EMAG' OR sellerName = 'STORE'"
+    } else if (filteredOption.altex && !filteredOption.emag && filteredOption.flanco && filteredOption.other) {
+      this.storehouseLayer.definitionExpression ="sellerName = 'FLANCO' OR sellerName = 'ALTEX' OR sellerName = 'STORE'"
+    } else if (filteredOption.altex && !filteredOption.emag && filteredOption.flanco && filteredOption.other) {
+      this.storehouseLayer.definitionExpression ="sellerName = 'FLANCO' OR sellerName = 'EMAG' OR sellerName = 'STORE'"
+    } else if (filteredOption.altex && filteredOption.emag && !filteredOption.flanco && filteredOption.other) {
+      this.storehouseLayer.definitionExpression ="sellerName = 'ALTEX' OR sellerName = 'EMAG' OR sellerName = 'STORE'"
+    } else if (filteredOption.altex && filteredOption.emag && filteredOption.flanco && filteredOption.other) {
+      this.storehouseLayer.definitionExpression =""
     }
 
   }

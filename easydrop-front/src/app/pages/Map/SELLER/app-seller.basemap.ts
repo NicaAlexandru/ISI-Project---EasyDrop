@@ -55,6 +55,7 @@ export class AppSellerBasemap implements OnInit, OnDestroy {
   dir: number = 0;
   count: number = 0;
   timeoutHandler = null;
+  storehouseLayer:__esri.FeatureLayer
 
   seller: AppUser = new AppUser("N/A", "N/A", "N/A", "N/A",
                                 "N/A");
@@ -154,17 +155,17 @@ export class AppSellerBasemap implements OnInit, OnDestroy {
           symbol: {
             type: "picture-marker",
             url: "https://andpskir6jjwuens.maps.arcgis.com/sharing/rest/content/items/a52aca1c0be0434b85241f715640b32b/data",
-            width: "25px",
-            height: "25px"
+            width: "26px",
+            height: "26px"
           }
         },
         {
           value: "FLANCO",
           symbol: {
             type: "picture-marker",
-            url: "https://andpskir6jjwuens.maps.arcgis.com/sharing/rest/content/items/586836d484b8459cb9a583d5c8bc9873/data",
-            width: "30px",
-            height: "30px"
+            url: "https://andpskir6jjwuens.maps.arcgis.com/sharing/rest/content/items/f4195c24cc054a72ac1a8e636641862e/data",
+            width: "26px",
+            height: "26px"
           }
         },
         {
@@ -172,23 +173,23 @@ export class AppSellerBasemap implements OnInit, OnDestroy {
           symbol: {
             type: "picture-marker",
             url: "https://andpskir6jjwuens.maps.arcgis.com/sharing/rest/content/items/1dc4c883299e48c2bc7c974602a54202/data",
-            width: "30px",
-            height: "30px"
+            width: "26px",
+            height: "26px"
           }
         },
         {
           value: "STORE",
           symbol: {
             type: "picture-marker",
-            url: "https://andpskir6jjwuens.maps.arcgis.com/sharing/rest/content/items/53373f6cfb3b48af83f60d76691ff8a4/data",
-            width: "30px",
-            height: "30px"
+            url: "https://andpskir6jjwuens.maps.arcgis.com/sharing/rest/content/items/3f7c3d1dd2cf400e93d75d8943ec55bf/data",
+            width: "26px",
+            height: "26px"
           }
         }
       ]
     }
 
-    var storehouseLayer: __esri.FeatureLayer = new this._FeatureLayer({
+    this.storehouseLayer = new this._FeatureLayer({
       url: "https://services5.arcgis.com/ObTnNYKRHBBDNxkd/arcgis/rest/services/storehouselayer/FeatureServer/0",
       renderer: render_logos,
       popupTemplate: {
@@ -217,7 +218,7 @@ export class AppSellerBasemap implements OnInit, OnDestroy {
       }
     })
 
-    this.map.add(storehouseLayer, 0);
+    this.map.add(this.storehouseLayer, 0);
   }
 
   async addStorehouse(newStorehouse: Storehouse) {
@@ -269,7 +270,8 @@ export class AppSellerBasemap implements OnInit, OnDestroy {
       geometry: point,
       symbol: simpleMarkerSymbol
     });
-    this.graphicsLayer.add(this.pointGraphic);
+
+    //this.graphicsLayer.add(this.pointGraphic);
   }
 
   removePoint() {
@@ -443,10 +445,22 @@ export class AppSellerBasemap implements OnInit, OnDestroy {
       console.log("mapView ready: ", this.view.ready);
       this.loaded = this.view.ready;
       this.mapLoadedEvent.emit(true);
+
       if (this.dataService.getLoggedSeller() != null) {
         // @ts-ignore
         this.seller = this.dataService.getLoggedSeller();
       }
+
+      if (this.seller.userName == "ALTEX") {
+        this.storehouseLayer.definitionExpression = "sellerName = 'ALTEX'"
+      } else if (this.seller.userName == "FLANCO") {
+        this.storehouseLayer.definitionExpression = "sellerName = 'FLANCO'"
+      } else if (this.seller.userName == "EMAG") {
+        this.storehouseLayer.definitionExpression = "sellerName = 'EMAG'"
+      } else {
+        this.storehouseLayer.definitionExpression = "sellerName = 'STORE'"
+      }
+
       this.runTimer();
     });
   }
