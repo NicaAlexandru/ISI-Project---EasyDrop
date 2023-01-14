@@ -59,6 +59,7 @@ export class AppSellerBasemap implements OnInit, OnDestroy {
   timeoutHandler = null;
   storehouseLayer:__esri.FeatureLayer
   products: Map<String, Array<Product>> = new Map();
+  altexAfiPImg;
 
   seller: AppUser = new AppUser("N/A", "N/A", "N/A", "N/A",
                                 "N/A");
@@ -494,6 +495,15 @@ export class AppSellerBasemap implements OnInit, OnDestroy {
     )
   }
 
+  initializeProductImage() {
+    this.altexAfiPImg = [
+      {id: 1, path:"../../../../assets/products/AltexAfi/applewatch.jpg"},
+      {id: 2, path:"../../../../assets/products/AltexAfi/Iphone13.jpg"},
+      {id: 3, path:"../../../../assets/products/AltexAfi/Mixer.jpg"},
+      {id: 4, path:"../../../../assets/products/AltexAfi/televizor samsung.jpg"},
+    ]
+  }
+
   ngOnInit() {
     // Get all products
     this.storehouseService.getStores().subscribe(
@@ -543,6 +553,8 @@ export class AppSellerBasemap implements OnInit, OnDestroy {
         this.storehouseLayer.definitionExpression = "sellerName = 'STORE'"
       }
     });
+
+    this.initializeProductImage()
   }
 
   ngOnDestroy() {

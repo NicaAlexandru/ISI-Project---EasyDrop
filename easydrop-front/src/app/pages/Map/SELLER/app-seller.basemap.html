@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>EasyDrop - Seller </title>
 </head>
 
 <body>
-
   <div #mapViewNode></div>
 
   <div class="topnav" *ngIf="seller != null">
@@ -129,14 +125,17 @@
 
     <span onclick="this.parentElement.style.display='none';
                      this.parentElement.style.border='0px';
-                    " class="closebtn"
+                    document.getElementById('imgAfi').style.display='none'
+                " class="closebtn"
           style="text-align: right; font-size: 45px; display: inline;  float:right">
         &times;
       </span>
     <br><br>
 
     <div *ngIf="seller.userName=='ALTEX'" style="width: 180px; overflow: hidden;">
-      <select style="width: auto;" name="abc" id="10">
+      <select style="width: auto;" name="abc" id="altex_select" onchange="
+            document.getElementById('imgAfi').style.display = 'block'
+         ">
         <option value="Altex AFI Cotroceni">Altex AFI Cotroceni</option>
         <option value="Altex Militari">Altex Militari</option>
         <option value="Altex Plaza Romania">Altex Plaza Romania</option>
@@ -147,6 +146,13 @@
         <option value="Altex Colosseum">Altex Colosseum</option>
         <option value="Altex Colentina">Altex Colentina</option>
       </select>
+
+      <div id="imgAfi" style="display:none">
+        <img [src]="altexAfiPImg[0].path" style="width:100px">
+        <img [src]="altexAfiPImg[1].path" style="width:100px">
+        <img [src]="altexAfiPImg[2].path" style="width:100px">
+        <img [src]="altexAfiPImg[3].path" style="width:100px">
+      </div>
     </div>
 
     <div *ngIf="seller.userName=='FLANCO'" style="width: 180px; overflow: hidden;">
@@ -159,6 +165,7 @@
         <option value="Flanco Bucuresti Titan">Flanco Bucuresti Titan</option>
         <option value="Altex Sun Plaza">Flanco Voluntari</option>
       </select>
+
     </div>
 
     <div *ngIf="seller.userName=='EMAG'" style="width: 180px; overflow: hidden;">
