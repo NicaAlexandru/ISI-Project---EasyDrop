@@ -22,7 +22,7 @@
           onclick="document.getElementById('storehouse_form').style.display = 'block'
                    document.getElementById('storehouse_form').style.border = '5px solid #f1f1f1'">Add Storehouse</button>
   <form #addStorehouseForm="ngForm"
-        (ngSubmit)="onSubmit(addStorehouseForm.value)">
+        (ngSubmit)="onSubmitStorehouse(addStorehouseForm.value)">
     <div id='storehouse_form' class="container" style="display: none; border:0">
       <a style="display: inline; margin-left: 10px;
                 font-size: x-large; font-weight:bold"> Complete the fields to add the Store</a>
@@ -68,6 +68,54 @@
                       document.getElementById('imgurl').value = '';
                       ">Submit</button>
 
+    </div>
+  </form>
+
+  <!-- ADD PRODUCT LOGIC -->
+  <button type="button" class="add_product_button"
+          onclick="document.getElementById('add_product_form').style.display = 'block'
+                   document.getElementById('add_product_form').style.border = '5px solid #f1f1f1'">Add Product</button>
+  <form #addProductForm="ngForm"
+        (ngSubmit)="onSubmitProduct(addProductForm.value)">
+    <div id='add_product_form' class="container" style="display: none; border:0">
+      <a style="display: inline; margin-left: 10px;
+                font-size: x-large; font-weight:bold"> Complete the fields to add a Product</a>
+
+      <span onclick="this.parentElement.style.display='none';
+                     this.parentElement.style.border='0px';
+                     document.getElementById('storehouseName').value = '';
+                     document.getElementById('productName').value = '';
+                     document.getElementById('productDescription').value = '';
+                     document.getElementById('productPrice').value = '';
+                    " class="closebtn"
+            style="text-align: right; font-size: 45px; display: inline;  float:right">
+        &times;
+      </span>
+      <br><br>
+
+      <label for="store_name" style="font-weight:bold; margin-left: 10px">Store Name</label>
+      <span class="asterisk_input">  </span>
+      <input type="text" id="store_name" placeholder="Enter a storehouse name" name="storehouseName" ngModel required>
+
+      <label for="product_name" style="font-weight:bold; margin-left: 10px">Name</label>
+      <span class="asterisk_input">  </span>
+      <input type="text" id="product_name" placeholder="Enter the product name" name="productName" ngModel required>
+
+      <label for="product_description" style="font-weight:bold; margin-left: 10px">Description</label>
+      <span class="asterisk_input">  </span>
+      <input type="text" id="product_description" placeholder="Enter the the product description" name="productDescription" ngModel required>
+
+      <label for="product_price" style="font-weight:bold; margin-left: 10px">Price</label>
+      <span class="asterisk_input">  </span>
+      <input type="number" id="product_price" placeholder="Enter the product price" name="productPrice" ngModel required>
+
+      <button type="submit" class="storehouse_submit_button" style="font-weight:bold; font-size: medium"
+              onclick="this.parentElement.style.display='none'; this.parentElement.style.border='0px'
+                      document.getElementById('storehouseName').value = '';
+                      document.getElementById('productName').value = '';
+                      document.getElementById('productDescription').value = '';
+                      document.getElementById('productPrice').value = '';
+                      ">Submit</button>
     </div>
   </form>
 

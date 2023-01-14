@@ -1,5 +1,5 @@
 .esri-view {
-  height: 855px; /*830*/
+  height: 875px; /*830*/
   margin-top: 65px;
 }
 
@@ -102,6 +102,18 @@ input[type=text],[type=number] {
   background: whitesmoke;
   border: 1px solid lightgray;
   font-size: medium;
+}
+
+.add_product_button {
+  position: absolute;
+  top:150px;
+  right: 30px;
+  z-index: 110;
+  height: 40px;
+  background: whitesmoke;
+  border: 1px solid lightgray;
+  font-size: medium;
+  width: 120px;
 }
 
 form {
