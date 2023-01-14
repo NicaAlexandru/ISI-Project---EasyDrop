@@ -128,7 +128,7 @@ input[type=text],[type=number] {
   width: 120px;
 }
 
-form, .see_products_container {
+form {
   width: 30%;
   z-index: 110;
   position: fixed;
@@ -138,6 +138,15 @@ form, .see_products_container {
   background: whitesmoke;
 }
 
+.see_products_container {
+  width: 15%;
+  z-index: 110;
+  position: fixed;
+  top: 28%;
+  right: 1.7%;
+  margin: 0 auto;
+  background: whitesmoke;
+}
 
 .asterisk_input::after {
   content:" *";
