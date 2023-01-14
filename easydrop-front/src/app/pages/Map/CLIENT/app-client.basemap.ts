@@ -197,11 +197,19 @@ export class AppClientBasemap implements OnInit, OnDestroy {
       ]
     }
 
+    const editThisAction = {
+      title: "See products",
+      id: "see_products",
+      className: "esri-icon-drag-horizontal"
+    };
+
     this.storehouseLayer = new this._FeatureLayer({
       url: "https://services5.arcgis.com/ObTnNYKRHBBDNxkd/arcgis/rest/services/storehouselayer/FeatureServer/0",
       renderer: render_logos,
+      outFields: ["*"],
       popupTemplate: {
         title: "{storehouseName}",
+        actions: [editThisAction],
         content: [
           {
             type: "media",

@@ -193,20 +193,18 @@ export class AppSellerBasemap implements OnInit, OnDestroy {
       ]
     }
 
+    const seeProducts = {
+      title: "See products",
+      id: "see_products",
+      className: "esri-icon-drag-horizontal"
+    };
+
     this.storehouseLayer = new this._FeatureLayer({
       url: "https://services5.arcgis.com/ObTnNYKRHBBDNxkd/arcgis/rest/services/storehouselayer/FeatureServer/0",
       renderer: render_logos,
       popupTemplate: {
         title: "{storehouseName}",
-        action: [
-          {
-            title: "Add product",
-            id: "add_product",
-            className: "esri-icon-plus",
-            type: "button",
-            visible: true
-          }
-        ],
+        action: [seeProducts],
         content: [
           {
             type: "media",
