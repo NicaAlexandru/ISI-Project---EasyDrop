@@ -142,7 +142,15 @@ export class AppClientBasemap implements OnInit, OnDestroy {
           return view.goTo(options.target);
         }
       });
+
       this.view.ui.add(locate, "top-left");
+
+      // Initialize search engine
+      const search = new Search({  //Add Search widget
+        view: this.view
+      });
+
+      this.view.ui.add(search, "top-right")
 
       // Fires `pointer-move` event when user clicks on "Shift"
       // key and moves the pointer on the view.

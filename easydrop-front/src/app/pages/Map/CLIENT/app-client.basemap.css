@@ -72,13 +72,14 @@
 
 .filter_store_button {
   position: absolute;
-  top:100px;
-  right: 30px;
+  top: 8.3%;
+  right: 15%;
   z-index: 110;
-  height: 40px;
-  background: whitesmoke;
+  height: 34px;
+  background: white;
   border: 1px solid lightgray;
-  font-size: medium;
+  font-size: 15px;
+  font-family: "Times New Roman", serif;
 }
 
 form {
