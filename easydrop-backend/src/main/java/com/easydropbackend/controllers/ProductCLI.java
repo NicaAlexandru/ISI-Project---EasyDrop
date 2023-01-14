@@ -67,7 +67,7 @@ public class ProductCLI {
 
     /* DeleteMapping is used because we will delete an element from the DB */
     @DeleteMapping("/delete/{id_product}")
-    public ResponseEntity<?> deleteProdus(@PathVariable("id_product") String id_product) {
+    public ResponseEntity<?> deleteProduct(@PathVariable("id_product") String id_product) {
         productService.deleteProduct(id_product);
         return new ResponseEntity<>(HttpStatus.OK);
     }

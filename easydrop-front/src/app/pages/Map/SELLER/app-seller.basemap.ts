@@ -16,6 +16,8 @@ import {AppUser} from "../../../models/appUser";
 import {DataService} from "../../../services/data.service";
 import {StorehouseService} from "../../../services/storehouse.service";
 import {HttpErrorResponse} from "@angular/common/http";
+import {Product} from "../../../models/product";
+import {ProductService} from "../../../services/product.service";
 
 @Component({
   selector: "app-seller-basemap",
@@ -56,10 +58,12 @@ export class AppSellerBasemap implements OnInit, OnDestroy {
   count: number = 0;
   timeoutHandler = null;
   storehouseLayer:__esri.FeatureLayer
+  products: Map<String, Array<Product>> = new Map();
 
   seller: AppUser = new AppUser("N/A", "N/A", "N/A", "N/A",
                                 "N/A");
-  constructor(private dataService: DataService, private storehouseService: StorehouseService) { }
+  constructor(private dataService: DataService, private storehouseService: StorehouseService,
+              private productService: ProductService) { }
 
   // @ts-ignore
   async initializeMap() {
@@ -194,6 +198,15 @@ export class AppSellerBasemap implements OnInit, OnDestroy {
       renderer: render_logos,
       popupTemplate: {
         title: "{storehouseName}",
+        action: [
+          {
+            title: "Add product",
+            id: "add_product",
+            className: "esri-icon-plus",
+            type: "button",
+            visible: true
+          }
+        ],
         content: [
           {
             type: "media",
@@ -212,6 +225,11 @@ export class AppSellerBasemap implements OnInit, OnDestroy {
                 fieldName: "storehouseAddress",
                 visible: true,
                 label: "Address"
+              },
+              {
+                fieldName: "sellerName",
+                visible: true,
+                label: "Seller"
               }
             ]
           }]
@@ -219,6 +237,10 @@ export class AppSellerBasemap implements OnInit, OnDestroy {
     })
 
     this.map.add(this.storehouseLayer, 0);
+  }
+
+  addProduct() {
+    alert("Product added!")
   }
 
   async addStorehouse(newStorehouse: Storehouse) {
@@ -404,7 +426,7 @@ export class AppSellerBasemap implements OnInit, OnDestroy {
 
   }
 
-  onSubmit(storehouse: Storehouse) {
+  onSubmitStorehouse(storehouse: Storehouse) {
     if (storehouse.storehouseName == '') {
       alert("Invalid data: please enter a name!");
     } else if (storehouse.storehouseAddress == '') {
@@ -420,7 +442,6 @@ export class AppSellerBasemap implements OnInit, OnDestroy {
                                     this.seller.userName, storehouse.storehouseAddress,
                                     storehouse.xcoord, storehouse.ycoord, storehouse.imgURL);
 
-    //alert(JSON.stringify(new_storehouse))
 
     // Add the new storehouse to the backend
     this.storehouseService.addStorehouse(new_storehouse).subscribe(
@@ -438,7 +459,70 @@ export class AppSellerBasemap implements OnInit, OnDestroy {
 
   }
 
+  onSubmitProduct(product: Product) {
+    if (product.storehouseName == '') {
+      alert("Invalid data: please enter a store name!");
+    } else if (product.productName == '') {
+      alert("Invalid data: please enter a product name!");
+    } else if (product.productDescription == '' ) {
+      alert("Invalid data: please enter a product description!");
+    } else if (product.productPrice.toString() == '') {
+      alert("Invalid data: please enter a product price!");
+    }
+
+    // Get the associated storehouse
+    this.storehouseService.getStoreByName(product.storehouseName).subscribe(
+      (response: Storehouse) => {
+        product.idStorehouse = response.idStorehouse;
+
+        // Add the product
+        this.productService.addProduct(product).subscribe(
+          (added_product: Product) => {
+            let plist = this.products.get(response.storehouseName)
+
+            // Store the product in the products list
+            if (plist != null) {
+              plist?.push(added_product)
+              this.products.set(response.storehouseName, plist)
+            } else {
+              alert("Error: Invalid product!")
+            }
+          }
+        )
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message)
+      }
+    )
+  }
+
   ngOnInit() {
+    // Get all products
+    this.storehouseService.getStores().subscribe(
+      (stores: Storehouse[]) => {
+        this.productService.getProduct().subscribe(
+          (products: Product[]) => {
+            for (let i = 0; i < stores.length; i++) {
+              let products_of_store: Product[] = [];
+              for (let j = 0; j < products.length; j++) {
+                if (products[j].storehouseName == stores[i].storehouseName) {
+                  products_of_store.push(products[j]);
+                }
+              }
+
+              this.products.set(stores[i].storehouseName, products_of_store)
+            }
+          },
+          (error: HttpErrorResponse) => {
+            alert(error.message)
+          }
+        )
+     },
+      (error: HttpErrorResponse) => {
+        alert(error.message)
+      }
+    )
+
     // Initialize MapView and return an instance of MapView
     this.initializeMap().then(() => {
       // The map has been initialized
@@ -460,8 +544,6 @@ export class AppSellerBasemap implements OnInit, OnDestroy {
       } else {
         this.storehouseLayer.definitionExpression = "sellerName = 'STORE'"
       }
-
-      this.runTimer();
     });
   }
 
