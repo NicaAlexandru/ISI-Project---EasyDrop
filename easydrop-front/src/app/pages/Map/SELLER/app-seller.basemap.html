@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>EasyDrop - Seller </title>
 </head>
 
 <body>
-
   <div #mapViewNode></div>
 
   <div class="topnav" *ngIf="seller != null">
@@ -118,6 +114,79 @@
                       ">Submit</button>
     </div>
   </form>
+
+  <!-- SEE PRODUCTS LOGIC -->
+  <button type="button" class="see_products_button"
+          onclick="document.getElementById('see_products').style.display = 'block'
+                   document.getElementById('see_products').style.border = '5px solid #f1f1f1'">See Products</button>
+  <div  id='see_products' class="see_products_container" style="display: none; border:0">
+    <a style="display: inline; margin-left: 10px;
+                font-size: x-large; font-weight:bold; text-align: center"> Select a Storehouse</a>
+
+    <span onclick="this.parentElement.style.display='none';
+                     this.parentElement.style.border='0px';
+                    document.getElementById('imgAfi').style.display='none'
+                " class="closebtn"
+          style="text-align: right; font-size: 45px; display: inline;  float:right">
+        &times;
+      </span>
+    <br><br>
+
+    <div *ngIf="seller.userName=='ALTEX'" style="width: 180px; overflow: hidden;">
+      <select style="width: auto;" name="abc" id="altex_select" onchange="
+            document.getElementById('imgAfi').style.display = 'block'
+         ">
+        <option value="Altex AFI Cotroceni">Altex AFI Cotroceni</option>
+        <option value="Altex Militari">Altex Militari</option>
+        <option value="Altex Plaza Romania">Altex Plaza Romania</option>
+        <option value="Altex Park Lake">Altex Park Lake</option>
+        <option value="Altex Vulcan">Altex Vulcan</option>
+        <option value="Altex Promenada">Altex Promenada</option>
+        <option value="Altex Sun Plaza">Altex Sun Plaza</option>
+        <option value="Altex Colosseum">Altex Colosseum</option>
+        <option value="Altex Colentina">Altex Colentina</option>
+      </select>
+
+      <div id="imgAfi" style="display:none">
+        <img [src]="altexAfiPImg[0].path" style="width:100px">
+        <img [src]="altexAfiPImg[1].path" style="width:100px">
+        <img [src]="altexAfiPImg[2].path" style="width:100px">
+        <img [src]="altexAfiPImg[3].path" style="width:100px">
+      </div>
+    </div>
+
+    <div *ngIf="seller.userName=='FLANCO'" style="width: 180px; overflow: hidden;">
+      <select style="width: auto;" name="abc" id="11">
+        <option value="Flanco Drumul Taberei">Flanco Drumul Taberei</option>
+        <option value="Flanco Lujerului">Flanco Lujerului</option>
+        <option value="Flanco Tineretului">Flanco Tineretului</option>
+        <option value="Flanco Orhideea">Flanco Orhideea</option>
+        <option value="Flanco Veranda Mall">Flanco Veranda Mall</option>
+        <option value="Flanco Bucuresti Titan">Flanco Bucuresti Titan</option>
+        <option value="Altex Sun Plaza">Flanco Voluntari</option>
+      </select>
+
+    </div>
+
+    <div *ngIf="seller.userName=='EMAG'" style="width: 180px; overflow: hidden;">
+      <select style="width: auto;" name="abc" id="12">
+        <option value="Emag Crangasi">Emag Crangasi</option>
+        <option value="Emag Baneasa">Emag Baneasa</option>
+        <option value="Flanco Tineretului">Emag Galeriile Titan</option>
+      </select>
+    </div>
+
+    <div *ngIf="seller.userName=='STORE'" style="width: 180px; overflow: hidden;">
+      <select style="width: auto;" name="abc" id="13">
+        <option value="Adidas">Adidas</option>
+        <option value="Carturesti Verona">Carturesti Verona</option>
+        <option value="Fossil Mega Malli">Fossil Mega Mall</option>
+      </select>
+    </div>
+
+
+
+  </div>
 
 </body>
 </html>

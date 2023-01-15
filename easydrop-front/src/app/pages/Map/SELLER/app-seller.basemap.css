@@ -116,12 +116,34 @@ input[type=text],[type=number] {
   width: 120px;
 }
 
+.see_products_button{
+  position: absolute;
+  top: 200px;
+  right: 30px;
+  z-index: 110;
+  height: 40px;
+  background: whitesmoke;
+  border: 1px solid lightgray;
+  font-size: medium;
+  width: 120px;
+}
+
 form {
   width: 30%;
   z-index: 110;
   position: fixed;
   top: 20%;
   left: 35%;
+  margin: 0 auto;
+  background: whitesmoke;
+}
+
+.see_products_container {
+  width: 15%;
+  z-index: 110;
+  position: fixed;
+  top: 28%;
+  right: 1.7%;
   margin: 0 auto;
   background: whitesmoke;
 }

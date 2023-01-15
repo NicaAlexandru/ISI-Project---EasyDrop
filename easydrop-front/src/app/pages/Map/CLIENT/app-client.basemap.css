@@ -1,5 +1,5 @@
 .esri-view {
-  height: 850px;
+  height: 875px;
   margin-top: 65px;
 }
 
@@ -72,13 +72,26 @@
 
 .filter_store_button {
   position: absolute;
-  top:100px;
-  right: 30px;
+  top: 8.3%;
+  right: 15%;
   z-index: 110;
-  height: 40px;
-  background: whitesmoke;
+  height: 34px;
+  background: white;
   border: 1px solid lightgray;
-  font-size: medium;
+  font-size: 16px;
+  font-family: "Times New Roman", serif;
+}
+
+.place_order_button {
+  position: absolute;
+  top: 8.3%;
+  right: 20%;
+  z-index: 110;
+  height: 34px;
+  background: white;
+  border: 1px solid lightgray;
+  font-size: 16px;
+  font-family: "Times New Roman", serif;
 }
 
 form {
@@ -91,7 +104,17 @@ form {
   background: whitesmoke;
 }
 
-.filter_submit_button {
+.place_order_form {
+  width: 20%;
+  z-index: 110;
+  position: fixed;
+  top: 16%;
+  right: 20%;
+  margin: 0 auto;
+  background: whitesmoke;
+}
+
+.filter_submit_button, .submit_order_button {
   background-color: #04AA6D;
   color: white;
   padding: 5px 5px;
@@ -101,3 +124,10 @@ form {
   cursor: pointer;
   width: 40%;
 }
+
+
+
+
+
+
+

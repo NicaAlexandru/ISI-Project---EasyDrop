@@ -38,3 +38,110 @@
     <button type="submit" class="filter_submit_button" style="font-weight:bold; font-size: medium">Filter</button>
   </div>
 </form>
+
+
+<!-- PLACE ORDER LOGIC -->
+<button type="button" class="place_order_button"
+        onclick="document.getElementById('place_order_form').style.display = 'block'
+                 document.getElementById('place_order_form').style.border = '5px solid #f1f1f1'
+                ">Place order</button>
+
+<form class="place_order_form" #placeOrderForm="ngForm"
+      (ngSubmit)="submitOrder(placeOrderForm.value)">
+  <div id='place_order_form' class="container" style="display: none; border:0">
+    <a style="display: inline; margin-left: 10px;
+                font-size: large; font-weight:bold; text-align: center"> Select a Seller</a>
+
+      <span onclick="this.parentElement.style.display='none';
+                       this.parentElement.style.border='0px';
+                       selected_store=''
+                      " class="closebtn" style="text-align: right; font-size: 30px; display: inline;  float:right">
+          &times;
+      </span>
+
+    <br><br>
+    <select style="width: 50%; display: block; margin-left: 10px; background-color: whitesmoke;" name="abc" id="select_store" onchange="
+                  if (document.getElementById('select_store').value === 'ALTEX') {
+                    document.getElementById('order_from_altex').style = 'display: block; margin-top:10px; margin-left: 10px;' +
+                     'overflow-y: scroll; height:400px;'
+                  } else if (document.getElementById('select_store').value === 'FLANCO') {
+                    document.getElementById('order_from_flanco').style = 'display: block; margin-top:10px; margin-left: 10px' +
+                     'overflow-y: scroll; height:400px;'
+                  } else if (document.getElementById('select_store').value === 'EMAG') {
+                    document.getElementById('order_from_emag').style = 'display: block; margin-top:10px; margin-left: 10px' +
+                     'overflow-y: scroll; height:400px;'
+                  }
+
+           ">
+      <option value="DEFAULT">--Sellers--</option>
+      <option value="ALTEX">ALTEX</option>
+      <option value="EMAG">EMAG</option>
+      <option value="FLANCO">FLANCO</option>
+    </select>
+
+    <!-- ALTEX ORDER -->
+    <div id="order_from_altex" style="display: none">
+      <br><a style="font-weight: bold">Select the Altex store</a><br><br>
+      <select style="width: 50%; display: block; background-color: whitesmoke;" id="select_altex_store" ngModel>
+        <option value="Altex Militari">Altex Militari</option>
+        <option value="Altex Afi Cotroceni">Altex Afi Cotroceni</option>
+        <option value="Altex Plaza Romania">Altex Plaza Romania</option>
+        <option value="Altex Park Lake">Altex Park Lake</option>
+        <option value="Altex Vulcan">Altex Vulcan</option>
+        <option value="Altex Promenada">Altex Promenda</option>
+        <option value="Altex Sun Plaza">Altex Sun Plaza</option>
+        <option value="Altex Colentina">Altex Colentina</option>
+        <option value="Altex Colosseum">Altex Colosseum</option>
+      </select>
+
+      <br><a style="font-weight: bold">Select the desired products</a><br><br>
+
+      <input type="checkbox" id="applewatch_altex" name="apple_watch" value="apple_watch" ngModel>
+      <label for="applewatch_altex" style="font-weight:bold"> Apple Watch </label><br>
+      <img [src]="altex_products_urls[0]"><br>
+      <label style="font-weight:bold">Description: </label>
+      <a>The latest Apple Watch will measure your pulse, help you respond to messages faster track your hearbeat and many others</a><br><br>
+      <label style="font-weight:bold">Price: </label>
+      <a>Price: 1599 RON</a><br><br>
+
+      <input type="checkbox" id="mixer_altex" name="mixer_altex" value="mixer_bosh" ngModel>
+      <label for="mixer_altex" style="font-weight:bold"> Mixer Bosh </label><br>
+      <img [src]="altex_products_urls[2]"><br>
+      <label style="font-weight:bold">Description: </label>
+      <a>The perfect multi purpose mixer that is a must have for every home cook</a><br><br>
+      <label style="font-weight:bold">Price: </label>
+      <a>Price: 149 RON</a><br><br>
+
+      <input type="checkbox" id="sony_altex" name="sony_altex" value="sony_a7" ngModel>
+      <label for="sony_altex" style="font-weight:bold"> Sony A7 IV </label><br>
+      <img [src]="altex_products_urls[3]" width="250" height="250"><br>
+      <label style="font-weight:bold">Description: </label>
+      <a>A state of the art mirrorless camera, that will make you take the perfect shots</a><br><br>
+      <label style="font-weight:bold">Price: </label>
+      <a>Price: 6999 RON</a><br><br>
+
+      <input type="checkbox" id="uscator_altex" name="uscator_altex" value="uscator_rufe" ngModel>
+      <label for="uscator_altex" style="font-weight:bold"> Samsung Clothes Dryer </label><br>
+      <img [src]="altex_products_urls[4]"><br>
+      <label style="font-weight:bold">Description: </label>
+      <a>The samsung clothes dryer is ergonomic, has good power consumtion and has 12 drying programes</a><br><br>
+      <label style="font-weight:bold">Price: </label>
+      <a>Price: 2789 RON</a><br><br>
+
+      <button type="submit" class="submit_order_button" style="font-weight:bold; font-size: medium">Submit order</button>
+    </div>
+
+    <div id="order_from_emag" style="display: none;">
+      <input type="checkbox" id="applewatch_emag" name="apple_watch" value="Apple Watch" ngModel>
+      <label for="applewatch_emag" style="font-weight:bold"> Apple Watch </label><br>
+    </div>
+
+    <div id="order_from_flanco" style="display: none;">
+      <input type="checkbox" id="applewatch_flanco" name="apple_watch" value="Apple Watch" ngModel>
+      <label for="applewatch_flanco" style="font-weight:bold"> Apple Watch </label><br>
+    </div>
+
+  </div>
+</form>
+
+

@@ -59,6 +59,7 @@ export class AppSellerBasemap implements OnInit, OnDestroy {
   timeoutHandler = null;
   storehouseLayer:__esri.FeatureLayer
   products: Map<String, Array<Product>> = new Map();
+  altexAfiPImg;
 
   seller: AppUser = new AppUser("N/A", "N/A", "N/A", "N/A",
                                 "N/A");
@@ -193,20 +194,18 @@ export class AppSellerBasemap implements OnInit, OnDestroy {
       ]
     }
 
+    const seeProducts = {
+      title: "See products",
+      id: "see_products",
+      className: "esri-icon-drag-horizontal"
+    };
+
     this.storehouseLayer = new this._FeatureLayer({
       url: "https://services5.arcgis.com/ObTnNYKRHBBDNxkd/arcgis/rest/services/storehouselayer/FeatureServer/0",
       renderer: render_logos,
       popupTemplate: {
         title: "{storehouseName}",
-        action: [
-          {
-            title: "Add product",
-            id: "add_product",
-            className: "esri-icon-plus",
-            type: "button",
-            visible: true
-          }
-        ],
+        action: [seeProducts],
         content: [
           {
             type: "media",
@@ -496,6 +495,15 @@ export class AppSellerBasemap implements OnInit, OnDestroy {
     )
   }
 
+  initializeProductImage() {
+    this.altexAfiPImg = [
+      {id: 1, path:"../../../../assets/products/AltexAfi/applewatch.jpg"},
+      {id: 2, path:"../../../../assets/products/AltexAfi/Iphone13.jpg"},
+      {id: 3, path:"../../../../assets/products/AltexAfi/Mixer.jpg"},
+      {id: 4, path:"../../../../assets/products/AltexAfi/televizor samsung.jpg"},
+    ]
+  }
+
   ngOnInit() {
     // Get all products
     this.storehouseService.getStores().subscribe(
@@ -545,6 +553,8 @@ export class AppSellerBasemap implements OnInit, OnDestroy {
         this.storehouseLayer.definitionExpression = "sellerName = 'STORE'"
       }
     });
+
+    this.initializeProductImage()
   }
 
   ngOnDestroy() {
