@@ -59,6 +59,14 @@ export class AppClientBasemap implements OnInit, OnDestroy {
   timeoutHandler = null;
   basemap = null;
   storehouseLayer: __esri.FeatureLayer;
+  selected_store = "";
+
+  altex_products_urls = ["../../../../assets/products/ALTEX/applewatch.jpg",
+    "../../../../assets/products/ALTEX/aspirator.jpg",
+    "../../../../assets/products/ALTEX/mixer bosh.jpg",
+    "../../../../assets/products/ALTEX/sony-a7-IV.jpg",
+    "../../../../assets/products/ALTEX/Uscator rufe.jpg"
+  ];
 
   client: AppUser = new AppUser("N/A", "N/A", "N/A", "N/A",
     "N/A");
@@ -473,6 +481,10 @@ export class AppClientBasemap implements OnInit, OnDestroy {
       this.timeoutHandler = null;
     }
 
+  }
+
+  submitOrder (order) {
+    alert(JSON.stringify(order))
   }
 
   filterSubmit(filteredOption) {
