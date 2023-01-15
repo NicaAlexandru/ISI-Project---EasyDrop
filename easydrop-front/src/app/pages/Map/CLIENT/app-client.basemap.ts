@@ -11,7 +11,8 @@ import {
 import { setDefaultOptions, loadModules } from 'esri-loader';
 import esri = __esri;
 import {AppUser} from "../../../models/appUser";
-import {DataService} from "../../../services/data.service"; // Esri TypeScript Types
+import {DataService} from "../../../services/data.service";
+import {pipe} from "rxjs"; // Esri TypeScript Types
 
 function logOut() {
   // delete user's session
@@ -59,6 +60,7 @@ export class AppClientBasemap implements OnInit, OnDestroy {
   timeoutHandler = null;
   basemap = null;
   storehouseLayer: __esri.FeatureLayer;
+  easydropLayer: __esri.FeatureLayer;
   selected_store = "";
 
   altex_products_urls = ["../../../../assets/products/ALTEX/applewatch.jpg",
@@ -183,6 +185,7 @@ export class AppClientBasemap implements OnInit, OnDestroy {
   }
 
   addFeatureLayers() {
+    // Storehouse_logos
     var render_logos = {
       type: "unique-value",
       field: "sellerName",
@@ -226,6 +229,7 @@ export class AppClientBasemap implements OnInit, OnDestroy {
       ]
     }
 
+    // Storehouse Layer
     this.storehouseLayer = new this._FeatureLayer({
       url: "https://services5.arcgis.com/ObTnNYKRHBBDNxkd/arcgis/rest/services/storehouselayer/FeatureServer/0",
       renderer: render_logos,
@@ -328,6 +332,43 @@ export class AppClientBasemap implements OnInit, OnDestroy {
     })
 
     this.map.add(this.storehouseLayer, 0);
+
+    // EasyDrop render
+    let easydrop_render = {
+      type: "simple",
+      symbol: {
+        type: "picture-marker",
+        url: "https://andpskir6jjwuens.maps.arcgis.com/sharing/rest/content/items/508cf4dce7e945b3a321595fb48aeca1/data",
+        width: "32px",
+        height: "32px"
+      }
+    }
+
+    this.easydropLayer = new this._FeatureLayer({
+        url: "https://services5.arcgis.com/ObTnNYKRHBBDNxkd/arcgis/rest/services/easydrop/FeatureServer/0",
+        renderer: easydrop_render,
+        outFields: ["*"],
+        popupTemplate: {
+          title: "{name}",
+          content: [{
+            type: "fields",
+            fieldInfos: [
+              {
+                fieldName: "id",
+                visible: true,
+                label: "Id"
+              },
+              {
+                fieldName: "address",
+                visible: true,
+                label: "Address"
+              }]
+          }]
+        }
+      })
+
+    this.map.add(this.easydropLayer, 1);
+    this.easydropLayer.visible = false;
   }
 
   addPoint(lat: number, lng: number) {
@@ -484,7 +525,16 @@ export class AppClientBasemap implements OnInit, OnDestroy {
   }
 
   submitOrder (order) {
-    alert(JSON.stringify(order))
+    // Hide the stores
+    this.storehouseLayer.visible = false;
+
+    // Make the easydrops visible
+    this.easydropLayer.visible = true;
+  }
+
+  submitEasyDropSelection(easyDrop) {
+    this.easydropLayer.visible = false;
+    this.storehouseLayer.visible = true;
   }
 
   filterSubmit(filteredOption) {

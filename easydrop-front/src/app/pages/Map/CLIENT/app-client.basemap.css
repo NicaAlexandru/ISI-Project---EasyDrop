@@ -104,7 +104,7 @@ form {
   background: whitesmoke;
 }
 
-.place_order_form {
+.place_order_form, .select_easydrop_form {
   width: 20%;
   z-index: 110;
   position: fixed;
@@ -114,7 +114,7 @@ form {
   background: whitesmoke;
 }
 
-.filter_submit_button, .submit_order_button {
+.filter_submit_button, .submit_order_button, .submit_easydrop_selection {
   background-color: #04AA6D;
   color: white;
   padding: 5px 5px;
