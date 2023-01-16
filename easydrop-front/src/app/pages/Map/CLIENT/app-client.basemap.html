@@ -57,6 +57,9 @@
 
       <span onclick="this.parentElement.style.display='none';
                        this.parentElement.style.border='0px';
+                       document.getElementById('order_from_altex').style = 'display:none';
+                       document.getElementById('order_from_flanco').style = 'display:none';
+                       document.getElementById('order_from_emag').style = 'display:none';
                        selected_store=''
                       " class="closebtn" style="text-align: right; font-size: 30px; display: inline;  float:right">
           &times;
@@ -66,13 +69,21 @@
     <select style="width: 50%; display: block; margin-left: 10px; background-color: whitesmoke;" name="abc" id="select_store" onchange="
                   if (document.getElementById('select_store').value === 'ALTEX') {
                     document.getElementById('order_from_altex').style = 'display: block; margin-top:10px; margin-left: 10px;' +
-                     'overflow-y: scroll; height:400px;'
-                  } else if (document.getElementById('select_store').value === 'FLANCO') {
-                    document.getElementById('order_from_flanco').style = 'display: block; margin-top:10px; margin-left: 10px' +
-                     'overflow-y: scroll; height:400px;'
-                  } else if (document.getElementById('select_store').value === 'EMAG') {
-                    document.getElementById('order_from_emag').style = 'display: block; margin-top:10px; margin-left: 10px' +
-                     'overflow-y: scroll; height:400px;'
+                     'overflow-y: scroll; height:400px;';
+                    document.getElementById('order_from_flanco').style = 'display:none';
+                    document.getElementById('order_from_emag').style = 'display:none';
+                  }
+                  if (document.getElementById('select_store').value === 'FLANCO') {
+                    document.getElementById('order_from_flanco').style = 'display: block; overflow-y: scroll; height:400px; '+
+                     'margin-top:10px; margin-left: 10px;';
+                     document.getElementById('order_from_altex').style = 'display:none';
+                     document.getElementById('order_from_emag').style = 'display:none';
+                  }
+                  if (document.getElementById('select_store').value === 'EMAG') {
+                    document.getElementById('order_from_emag').style = 'display: block; overflow-y: scroll; height:400px; '+
+                     'margin-top:10px; margin-left: 10px;';
+                     document.getElementById('order_from_flanco').style = 'display:none';
+                     document.getElementById('order_from_altex').style = 'display:none';
                   }
 
            ">
@@ -105,7 +116,7 @@
       <label style="font-weight:bold">Description: </label>
       <a>The latest Apple Watch will measure your pulse, help you respond to messages faster track your hearbeat and many others</a><br><br>
       <label style="font-weight:bold">Price: </label>
-      <a>Price: 1599 RON</a><br><br>
+      <a>1599 RON</a><br><br>
 
       <input type="checkbox" id="mixer_altex" name="mixer_altex" value="mixer_bosh" ngModel>
       <label for="mixer_altex" style="font-weight:bold"> Mixer Bosh </label><br>
@@ -113,7 +124,7 @@
       <label style="font-weight:bold">Description: </label>
       <a>The perfect multi purpose mixer that is a must have for every home cook</a><br><br>
       <label style="font-weight:bold">Price: </label>
-      <a>Price: 149 RON</a><br><br>
+      <a>149 RON</a><br><br>
 
       <input type="checkbox" id="sony_altex" name="sony_altex" value="sony_a7" ngModel>
       <label for="sony_altex" style="font-weight:bold"> Sony A7 IV </label><br>
@@ -121,7 +132,7 @@
       <label style="font-weight:bold">Description: </label>
       <a>A state of the art mirrorless camera, that will make you take the perfect shots</a><br><br>
       <label style="font-weight:bold">Price: </label>
-      <a>Price: 6999 RON</a><br><br>
+      <a>6999 RON</a><br><br>
 
       <input type="checkbox" id="uscator_altex" name="uscator_altex" value="uscator_rufe" ngModel>
       <label for="uscator_altex" style="font-weight:bold"> Samsung Clothes Dryer </label><br>
@@ -129,24 +140,108 @@
       <label style="font-weight:bold">Description: </label>
       <a>The samsung clothes dryer is ergonomic, has good power consumtion and has 12 drying programes</a><br><br>
       <label style="font-weight:bold">Price: </label>
-      <a>Price: 2789 RON</a><br><br>
+      <a>2789 RON</a><br><br>
 
-      <button type="submit" class="submit_order_button" style="font-weight:bold; font-size: medium">Submit order</button>
+      <button type="submit" class="submit_order_button" style="font-weight:bold; font-size: medium">Place order</button>
     </div>
 
 
 
     <!-- TODO EMAG PLACE ORDER-->
     <div id="order_from_emag" style="display: none;">
-      <input type="checkbox" id="applewatch_emag" name="apple_watch" value="Apple Watch" ngModel>
-      <label for="applewatch_emag" style="font-weight:bold"> Apple Watch </label><br>
+      <br><a style="font-weight: bold">Select the Emag store</a><br><br>
+      <select style="width: 50%; display: block; background-color: whitesmoke;" id="select_emag_store" ngModel>
+        <option value="Emag Crangasi">Emag Crangasi</option>
+        <option value="Emag Baneasa">Emag Baneasa</option>
+        <option value="Emag Galeriile Titan">Emag Galeriile Titan</option>
+      </select>
+
+      <input type="checkbox" id="macbook_emag" name="macbook_emag" value="macbook_emag" ngModel>
+      <label for="macbook_emag" style="font-weight:bold"> MacBook Pro </label><br>
+      <img [src]="emag_products_urls[0]" width="250" height="250"><br>
+      <label style="font-weight:bold">Description: </label>
+      <a>Portable, efficient, powerfull with the latest M2 chip, this laptop will help you achieve any personal projects</a><br><br>
+      <label style="font-weight:bold">Price: </label>
+      <a>12599 RON</a><br><br>
+
+      <input type="checkbox" id="ps5_emag" name="ps5_emag" value="ps5_emag" ngModel>
+      <label for="ps5_emag" style="font-weight:bold"> PS5 </label><br>
+      <img [src]="emag_products_urls[1]"><br>
+      <label style="font-weight:bold">Description: </label>
+      <a>Play the latest console generation games; 256GB, White</a><br><br>
+      <label style="font-weight:bold">Price: </label>
+      <a>2199 RON</a><br><br>
+
+      <input type="checkbox" id="microunde_emag" name="microunde_emag" value="microunde_emag" ngModel>
+      <label for="microunde_emag" style="font-weight:bold"> Toshiba Microwave </label><br>
+      <img [src]="emag_products_urls[3]"><br>
+      <label style="font-weight:bold">Description: </label>
+      <a>With 5 styles of cooking, including defrosting</a><br><br>
+      <label style="font-weight:bold">Price: </label>
+      <a>259 RON</a><br><br>
+
+      <input type="checkbox" id="tv_emag" name="tv_emag" value="tv_emag" ngModel>
+      <label for="tv_emag" style="font-weight:bold"> Samsung OLED TV </label><br>
+      <img [src]="emag_products_urls[2]"><br>
+      <label style="font-weight:bold">Description: </label>
+      <a>Rich contranst, RGB, compatible with Netflix</a><br><br>
+      <label style="font-weight:bold">Price: </label>
+      <a>1199 RON</a><br><br>
+
     </div>
+
 
 
     <!-- TODO FLANCO PLACE ORDER-->
     <div id="order_from_flanco" style="display: none;">
       <input type="checkbox" id="applewatch_flanco" name="apple_watch" value="Apple Watch" ngModel>
+
+    <div id="order_from_flanco" style="display: none">
+      <br><a style="font-weight: bold">Select the Flanco store</a><br><br>
+      <select style="width: 50%; display: block; background-color: whitesmoke;" id="select_flanco_store" ngModel>
+        <option value="Flanco Drumul Taberei">Flanco Drumul Taberei</option>
+        <option value="Flanco Lujerului">Flanco Lujerului</option>
+        <option value="Flanco Tineretului">Flanco Tineretului</option>
+        <option value="Flanco Orhideea">Flanco Orhideea</option>
+        <option value="Flanco Veranda Mall">Flanco Veranda Mall</option>
+        <option value="Flanco Bucuresti Titan">Flanco Bucuresti Titan</option>
+      </select>
+
+      <br><a style="font-weight: bold">Select the desired products</a><br><br>
+
+      <input type="checkbox" id="airpods_flanco" name="airpods_flanco" value="airpods_flanco" ngModel>
+      <label for="airpods_flanco" style="font-weight:bold"> Apple Airpods Pro </label><br>
+      <img [src]="flanco_products_urls[0]"><br>
+      <label style="font-weight:bold">Description: </label>
+      <a>Take the music everywhere with you. Best sound quality with noise cancellation</a><br><br>
+      <label style="font-weight:bold">Price: </label>
+      <a>1229 RON</a><br><br>
+
+      <input type="checkbox" id="espresso_flanco" name="espresso_flanco" value="espresso_flanco" ngModel>
+      <label for="espresso_flanco" style="font-weight:bold"> DeLonghi Espresso Machine</label><br>
+      <img [src]="flanco_products_urls[1]"><br>
+      <label style="font-weight:bold">Description: </label>
+      <a>This espresso machine has 12 programs of making coffee that you can enjoy</a><br><br>
+      <label style="font-weight:bold">Price: </label>
+      <a>1899 RON</a><br><br>
+
+      <input type="checkbox" id="applewatch_flanco" name="apple_watch" value="apple_watch" ngModel>
       <label for="applewatch_flanco" style="font-weight:bold"> Apple Watch </label><br>
+      <img [src]="flanco_products_urls[2]"><br>
+      <label style="font-weight:bold">Description: </label>
+      <a>The latest Apple Watch will measure your pulse, help you respond to messages faster track your hearbeat and many others</a><br><br>
+      <label style="font-weight:bold">Price: </label>
+      <a>1699 RON</a><br><br>
+
+      <input type="checkbox" id="logi_flanco" name="logi" value="logi" ngModel>
+      <label for="logi_flanco" style="font-weight:bold"> Logitech G102 Mouse </label><br>
+      <img [src]="flanco_products_urls[3]"><br>
+      <label style="font-weight:bold">Description: </label>
+      <a>Gaming mouse of highest quality, 8200 dpi, black</a><br><br>
+      <label style="font-weight:bold">Price: </label>
+      <a>99 RON</a><br><br>
+
+      <button type="submit" class="submit_order_button" style="font-weight:bold; font-size: medium">Place order</button>
     </div>
 
   </div>

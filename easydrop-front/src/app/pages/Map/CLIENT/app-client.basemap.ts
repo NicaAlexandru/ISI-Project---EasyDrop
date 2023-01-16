@@ -70,6 +70,20 @@ export class AppClientBasemap implements OnInit, OnDestroy {
     "../../../../assets/products/ALTEX/Uscator rufe.jpg"
   ];
 
+  flanco_products_urls = [
+    "../../../../assets/products/FLANCO/airpods.jpeg",
+    "../../../../assets/products/FLANCO/espressor.jpeg",
+    "../../../../assets/products/FLANCO/applewatch.jpg",
+    "../../../../assets/products/FLANCO/mouse_logi.jpeg",
+  ];
+
+  emag_products_urls = [
+    "../../../../assets/products/EMAG/macbook_pro.webp",
+    "../../../../assets/products/EMAG/ps5.jpeg",
+    "../../../../assets/products/EMAG/tv_samsung.jpeg",
+    "../../../../assets/products/EMAG/cuptor microunde toshiba.jpeg",
+  ];
+
   client: AppUser = new AppUser("N/A", "N/A", "N/A", "N/A",
     "N/A");
 
@@ -540,13 +554,13 @@ export class AppClientBasemap implements OnInit, OnDestroy {
 
   filterSubmit(filteredOption) {
     if (filteredOption.altex && !filteredOption.emag && !filteredOption.flanco && !filteredOption.other) {
-      this.storehouseLayer.definitionExpression = "sellerName = 'ALTEX";
+      this.storehouseLayer.definitionExpression = "sellerName = 'ALTEX'";
     } else if (!filteredOption.altex && filteredOption.emag && !filteredOption.flanco && !filteredOption.other) {
-      this.storehouseLayer.definitionExpression = "sellerName = 'EMAG";
+      this.storehouseLayer.definitionExpression = "sellerName = 'EMAG'";
     } else if (!filteredOption.altex && !filteredOption.emag && filteredOption.flanco && !filteredOption.other) {
-      this.storehouseLayer.definitionExpression = "sellerName = 'FLANCO";
+      this.storehouseLayer.definitionExpression = "sellerName = 'FLANCO'";
     } else if (!filteredOption.altex && !filteredOption.emag && !filteredOption.flanco && filteredOption.other) {
-      this.storehouseLayer.definitionExpression = "sellerName = 'STORE";
+      this.storehouseLayer.definitionExpression = "sellerName = 'STORE'";
     } else if (filteredOption.altex && filteredOption.emag && !filteredOption.flanco && !filteredOption.other) {
       this.storehouseLayer.definitionExpression ="sellerName = 'ALTEX' OR sellerName = 'EMAG'"
     } else if (filteredOption.altex && !filteredOption.emag && filteredOption.flanco && !filteredOption.other) {
@@ -570,6 +584,8 @@ export class AppClientBasemap implements OnInit, OnDestroy {
     } else if (filteredOption.altex && filteredOption.emag && !filteredOption.flanco && filteredOption.other) {
       this.storehouseLayer.definitionExpression ="sellerName = 'ALTEX' OR sellerName = 'EMAG' OR sellerName = 'STORE'"
     } else if (filteredOption.altex && filteredOption.emag && filteredOption.flanco && filteredOption.other) {
+      this.storehouseLayer.definitionExpression =""
+    } else {
       this.storehouseLayer.definitionExpression =""
     }
 
