@@ -7,3 +7,40 @@
   <a class="logout" href="login" onclick="logOut()">Log out</a>
   <a class="logged_user"> User: {{courier.userName}}</a>
 </div>
+
+<!-- Accept order logic -->
+<button type="button" class="accept_order_button"onclick="document.getElementById('see_orders_form').style.display = 'block'
+document.getElementById('see_orders_form').style.border = '5px solid #f1f1f1'"> See orders</button>
+<form class="see_orders_form" #seeOrdersForm="ngForm"
+    (ngSubmit)="acceptOrder(seeOrdersForm.value)">
+  <div id='see_orders_form' class="container" style="display: none; border:0">
+    <a style="display: inline; margin-left: 10px; font-size: large; font-weight: bold; text-align: center;"> Select an order</a>
+    <span onclick="this.parentElement.style.display='none';
+                       this.parentElement.style.border='0px';
+                       selected_store=''
+                      " class="closebtn" style="text-align: right; font-size: 30px; display: inline;  float:right">
+          &times;
+    </span>
+    <br><br>
+
+    <select style="word-wrap: 50%; display:block; margin-left: 10px; background-color: whitesmoke;"
+      name="abc" id="select_store" onchange="
+      if (document.getElementById('select_store').value === 'ALTEX') {
+        document.getElementById('order_from_altex').style = 'display: block; margin-top:10px; margin-left: 10px;' +
+        'overflow-y: scroll; height:400px;'
+      } else if (document.getElementById('select_store').value === 'FLANCO') {
+        document.getElementById('order_from_flanco').style = 'display: block; margin-top:10px; margin-left: 10px' +
+        'overflow-y: scroll; height:400px;'
+      } else if (document.getElementById('select_store').value === 'EMAG') {
+        document.getElementById('order_from_emag').style = 'display: block; margin-top:10px; margin-left: 10px' +
+        'overflow-y: scroll; height:400px;'
+      }
+      ">
+        <option value="" disabled selected>Select order</option>
+        <option value="order1">Apple Watch Series 8 Emag Box 1</option>
+        <option value="order2">Samsung Galaxy S22 Altex Box 2</option>
+        <option value="order3">Flanco Samsung Clothes Dryer Box 3</option>
+    </select>
+    <button type="submit" class="accept_order_button">Accept Order</button>
+  </div>
+</form>
