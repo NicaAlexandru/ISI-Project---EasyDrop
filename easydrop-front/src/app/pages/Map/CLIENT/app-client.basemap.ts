@@ -530,6 +530,7 @@ export class AppClientBasemap implements OnInit, OnDestroy {
 
     // Make the easydrops visible
     this.easydropLayer.visible = true;
+
   }
 
   submitEasyDropSelection(easyDrop) {
