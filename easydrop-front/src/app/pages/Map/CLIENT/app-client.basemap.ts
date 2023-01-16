@@ -489,13 +489,13 @@ export class AppClientBasemap implements OnInit, OnDestroy {
 
   filterSubmit(filteredOption) {
     if (filteredOption.altex && !filteredOption.emag && !filteredOption.flanco && !filteredOption.other) {
-      this.storehouseLayer.definitionExpression = "sellerName = 'ALTEX";
+      this.storehouseLayer.definitionExpression = "sellerName = 'ALTEX'";
     } else if (!filteredOption.altex && filteredOption.emag && !filteredOption.flanco && !filteredOption.other) {
-      this.storehouseLayer.definitionExpression = "sellerName = 'EMAG";
+      this.storehouseLayer.definitionExpression = "sellerName = 'EMAG'";
     } else if (!filteredOption.altex && !filteredOption.emag && filteredOption.flanco && !filteredOption.other) {
-      this.storehouseLayer.definitionExpression = "sellerName = 'FLANCO";
+      this.storehouseLayer.definitionExpression = "sellerName = 'FLANCO'";
     } else if (!filteredOption.altex && !filteredOption.emag && !filteredOption.flanco && filteredOption.other) {
-      this.storehouseLayer.definitionExpression = "sellerName = 'STORE";
+      this.storehouseLayer.definitionExpression = "sellerName = 'STORE'";
     } else if (filteredOption.altex && filteredOption.emag && !filteredOption.flanco && !filteredOption.other) {
       this.storehouseLayer.definitionExpression ="sellerName = 'ALTEX' OR sellerName = 'EMAG'"
     } else if (filteredOption.altex && !filteredOption.emag && filteredOption.flanco && !filteredOption.other) {
