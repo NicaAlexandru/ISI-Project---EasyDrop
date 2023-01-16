@@ -47,7 +47,10 @@
                 ">Place order</button>
 
 <form class="place_order_form" #placeOrderForm="ngForm"
-      (ngSubmit)="submitOrder(placeOrderForm.value)">
+      (ngSubmit)="submitOrder(placeOrderForm.value)"
+      onsubmit="document.getElementById('select_easydrop_block').style = 'display: block; margin-top:5px; margin-left: 10px;';
+                document.getElementById('place_order_form').style.display = 'none'
+">
   <div id='place_order_form' class="container" style="display: none; border:0">
     <a style="display: inline; margin-left: 10px;
                 font-size: large; font-weight:bold; text-align: center"> Select a Seller</a>
@@ -142,6 +145,9 @@
       <button type="submit" class="submit_order_button" style="font-weight:bold; font-size: medium">Place order</button>
     </div>
 
+
+
+    <!-- TODO EMAG PLACE ORDER-->
     <div id="order_from_emag" style="display: none;">
       <br><a style="font-weight: bold">Select the Emag store</a><br><br>
       <select style="width: 50%; display: block; background-color: whitesmoke;" id="select_emag_store" ngModel>
@@ -185,6 +191,10 @@
     </div>
 
 
+
+    <!-- TODO FLANCO PLACE ORDER-->
+    <div id="order_from_flanco" style="display: none;">
+      <input type="checkbox" id="applewatch_flanco" name="apple_watch" value="Apple Watch" ngModel>
 
     <div id="order_from_flanco" style="display: none">
       <br><a style="font-weight: bold">Select the Flanco store</a><br><br>
@@ -234,6 +244,56 @@
       <button type="submit" class="submit_order_button" style="font-weight:bold; font-size: medium">Place order</button>
     </div>
 
+  </div>
+</form>
+
+<!-- SELECT EASY DROP -->
+<form class="select_easydrop_form"
+      #selectEasyDropForm="ngForm"
+      (ngSubmit)="submitEasyDropSelection(selectEasyDropForm.value)"
+>
+  <div id="select_easydrop_block" style="display: none">
+    <br><a style="display: inline; margin-left: 10px;
+                font-size: large; font-weight:bold; text-align: center">Select the EasyDrop for delivery</a><br><br>
+    <span class="closebtn" style="text-align: right; font-size: 30px; display: inline;  float:right"
+      onclick="this.parentElement.style.display='none';
+                   this.parentElement.style.border='0px';
+                   easydropLayer.visible=false;
+                   storehouseLayer.visible=true;
+">
+          &times;
+    </span>
+
+    <select style="width: 50%; display: block; background-color: whitesmoke;" id="select_easydrop" ngModel>
+      <option value="EasyDrop Express Petrol">EasyDrop Express Petrol</option>
+      <option value="EasyDrop Timisoara Residence">EasyDrop Timisoara Residence</option>
+      <option value="EasyDrop Cuza">EasyDrop Cuza</option>
+      <option value="EasyDrop Apusului">EasyDrop Apusului</option>
+      <option value="EasyDrop Plaza Romania">EasyDrop Plaza Romania</option>
+      <option value="EasyDrop Drumul Taberei">EasyDrop Drumul Taberei</option>
+      <option value="EasyDrop Prelungirea Ghencea">EasyDrop Prelungirea Ghencea</option>
+      <option value="EasyDrop Mihail Sebastian">EasyDrop Mihail Sebastian</option>
+      <option value="EasyDrop Grand Crangasi">EasyDrop Grand Crangasi</option>
+      <option value="EasyDrop OMV Alexandriei">EasyDrop OMV Alexandriei</option>
+      <option value="EasyDrop Confort Urban">EasyDrop Confort Urban</option>
+      <option value="EasyDrop Ferentari">EasyDrop Ferentari</option>
+      <option value="EasyDrop Tineretului">EasyDrop Tineretului</option>
+      <option value="EasyDrop Aparatorii Patriei">EasyDrop Aparatorii Patriei</option>
+      <option value="EasyDrop Hanul lui Manuc">EasyDrop Hanul lui Manuc</option>
+      <option value="EasyDrop Universitate">EasyDrop Universitate</option>
+      <option value="EasyDrop 1 Decembrie">EasyDrop 1 Decembrie</option>
+      <option value="EasyDrop Galeriile Titan">EasyDrop  Galeriile Titan</option>
+      <option value="EasyDrop Pantelimon">EasyDrop Pantelimon</option>
+      <option value="EasyDrop Colentina">EasyDrop Colentina</option>
+      <option value="EasyDrop Parcul Tei">EasyDrop Parcul Tei</option>
+      <option value="EasyDrop Victoriei">EasyDrop Victoriei</option>
+      <option value="EasyDrop Arcul de Triumf">EasyDrop Arcul de Triumf</option>
+      <option value="EasyDrop Henri Coanda">EasyDrop Henri Coanda</option>
+      <option value="EasyDrop Baneasa">EasyDrop Baneasa</option>
+    </select>
+
+    <br><br>
+    <button type="submit" class="submit_easydrop_selection" style="font-weight:bold; font-size: medium">Submit order</button>
   </div>
 </form>
 
