@@ -53,6 +53,8 @@ export class AppCourierBasemap implements OnInit, OnDestroy {
   count: number = 0;
   timeoutHandler = null;
   basemap = null;
+  storehouseLayer: __esri.FeatureLayer;
+  selected_store = "";
 
   courier: AppUser = new AppUser("N/A", "N/A", "N/A", "N/A",
     "N/A");
@@ -99,7 +101,7 @@ export class AppCourierBasemap implements OnInit, OnDestroy {
         baseLayers: [
           new VectorTileLayer({
             portalItem: {
-              id: "285dfc992f404dd1b88b24a46a4724ec" // Forest and Parks Canvas style
+              id: "031b3b2b4d46485fb51e159e0d98d5c6" // Forest and Parks Canvas style
             }
           })
         ]
@@ -148,32 +150,151 @@ export class AppCourierBasemap implements OnInit, OnDestroy {
   }
 
   addFeatureLayers() {
-    // Trailheads feature layer (points)
-    var trailheadsLayer: __esri.FeatureLayer = new this._FeatureLayer({
-      url:
-        "https://services3.arcgis.com/GVgbJbqm8hXASVYi/arcgis/rest/services/Trailheads/FeatureServer/0"
-    });
+    var render_logos = {
+      type: "unique-value",
+      field: "sellerName",
+      uniqueValueInfos: [
+        {
+          value: "ALTEX",
+          symbol: {
+            type: "picture-marker",
+            url: "https://andpskir6jjwuens.maps.arcgis.com/sharing/rest/content/items/a52aca1c0be0434b85241f715640b32b/data",
+            width: "26px",
+            height: "26px"
+          }
+        },
+        {
+          value: "FLANCO",
+          symbol: {
+            type: "picture-marker",
+            url: "https://andpskir6jjwuens.maps.arcgis.com/sharing/rest/content/items/f4195c24cc054a72ac1a8e636641862e/data",
+            width: "26px",
+            height: "26px"
+          }
+        },
+        {
+          value: "EMAG",
+          symbol: {
+            type: "picture-marker",
+            url: "https://andpskir6jjwuens.maps.arcgis.com/sharing/rest/content/items/1dc4c883299e48c2bc7c974602a54202/data",
+            width: "26px",
+            height: "26px"
+          }
+        },
+        {
+          value: "STORE",
+          symbol: {
+            type: "picture-marker",
+            url: "https://andpskir6jjwuens.maps.arcgis.com/sharing/rest/content/items/3f7c3d1dd2cf400e93d75d8943ec55bf/data",
+            width: "26px",
+            height: "26px"
+          }
+        }
+      ]
+    }
 
-    this.map.add(trailheadsLayer);
+    this.storehouseLayer = new this._FeatureLayer({
+      url: "https://services5.arcgis.com/ObTnNYKRHBBDNxkd/arcgis/rest/services/storehouselayer/FeatureServer/0",
+      renderer: render_logos,
+      outFields: ["*"],
+      popupTemplate: {
+        title: "{storehouseName}",
+        content: [
+          {
+            type: "fields",
+            fieldInfos: [
+              {
+                fieldName: "storehouseAddress",
+                visible: true,
+                label: "Address"
+              },
+              {
+                fieldName: "sellerName",
+                visible: true,
+                label: "Seller"
+              }
+            ]
+          },
+          {
+            type: "media",
+            mediaInfos: [
+              {
+                value: {
+                  sourceURL: "{imgURL}"
+                }
+              }
+            ]
+          },
+          {
+            type: "media",
+            mediaInfos: [
+              {
+                value: {
+                  sourceURL: "https://andpskir6jjwuens.maps.arcgis.com/sharing/rest/content/items/be2273b6193e4e26a03ced3cfac78872/data"
+                },
+                caption: "<b>Description: </b>The latest Apple Watch will measure your pulse, help you respond to messages faster," +
+                  "track your hearbeat and many others<br><br><b>Price: </b>1599 RON"
+              }
+            ],
+            title: "Applewatch Series 8",
+          },
+          {
+            type: "media",
+            mediaInfos: [
+              {
+                value: {
+                  sourceURL: "https://andpskir6jjwuens.maps.arcgis.com/sharing/rest/content/items/50844d64531d421289d699e30eb4d058/data"
+                },
+                caption: "<b>Description: </b>The Samsung Galaxy S22 will help you take the best photos, play best mobile games," +
+                  "and help you stay organized<br><br><b>Price: </b>3999 RON"
+              }
+            ],
+            title: "Samsung Galaxy S22"
+          },
+          {
+            type: "media",
+            mediaInfos: [
+              {
+                value: {
+                  sourceURL: "https://andpskir6jjwuens.maps.arcgis.com/sharing/rest/content/items/5ac58ca82c3949da92938c5db84f5d0d/data"
+                },
+                caption: "<b>Description: </b>The perfect multi purpose mixer that is a must have for every home cook" +
+                  "<br><br><b>Price: </b>159 RON"
+              }
+            ],
+            title: "Bosh Mixer"
+          },
+          {
+            type: "media",
+            mediaInfos: [
+              {
+                value: {
+                  sourceURL: "https://andpskir6jjwuens.maps.arcgis.com/sharing/rest/content/items/34db570c8f704fad82dbc5158665c09f/data"
+                },
+                caption: "<b>Description: </b>A state of the art mirrorless camera, that will make you take the perfect shots" +
+                  "<br><br><b>Price: </b> 6999 RON"
+              }
+            ],
+            title: "Sony A7 IV"
+          },
+          {
+            type: "media",
+            mediaInfos: [
+              {
+                value: {
+                  sourceURL: "https://andpskir6jjwuens.maps.arcgis.com/sharing/rest/content/items/13dd446ebab748f49e8627ec6f6cc434/data"
+                },
+                caption: "<b>Description: </b>The samsung clothes dryer is ergonomic, has good power consumtion and has 12 drying programes" +
+                  "<br><br><b>Price: </b> 2789 RON"
+              }
+            ],
+            title: "Samsung Clothes Dryer"
+          }
+        ]
+      }
+    })
 
-
-    // Trails feature layer (lines)
-    var trailsLayer: __esri.FeatureLayer = new this._FeatureLayer({
-      url:
-        "https://services3.arcgis.com/GVgbJbqm8hXASVYi/arcgis/rest/services/Trails/FeatureServer/0"
-    });
-
-    this.map.add(trailsLayer, 0);
-
-    // Parks and open spaces (polygons)
-    var parksLayer: __esri.FeatureLayer = new this._FeatureLayer({
-      url:
-        "https://services3.arcgis.com/GVgbJbqm8hXASVYi/arcgis/rest/services/Parks_and_Open_Space/FeatureServer/0"
-    });
-
-    this.map.add(parksLayer, 0);
-
-    console.log("feature layers added");
+    this.map.add(this.storehouseLayer, 0);
   }
 
   addPoint(lat: number, lng: number) {
@@ -327,6 +448,10 @@ export class AppCourierBasemap implements OnInit, OnDestroy {
       this.timeoutHandler = null;
     }
 
+  }
+
+  acceptOrder (order) {
+    alert(JSON.stringify(order))
   }
 
   ngOnInit() {
